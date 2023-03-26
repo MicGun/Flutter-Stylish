@@ -41,129 +41,76 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPage extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('stylish')),
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 200,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [for (var i = 0; i < 5; i++) const ImageCard()],
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('stylish')),
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 170,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [for (var i = 0; i < 5; i++) const ImageCard()],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 400,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Column(
-                  children: [
-                    const Text('Men'),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          for (var i = 0; i < 10; i++) ProductWidget()
-                        ],
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Column(
+                    children: [
+                      const Text(
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        'Men'),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            for (var i = 0; i < 10; i++) ProductWidget()
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
+                  Expanded(
+                      child: Column(
+                    children: [
+                      const Text(
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        'Male',
+                        ),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            for (var i = 0; i < 10; i++) ProductWidget()
+                          ],
+                        ),
                       ),
-                    )
-                  ],
-                )),
-                Expanded(
-                    child: Column(
-                  children: [
-                    const Text('Male'),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          for (var i = 0; i < 10; i++) ProductWidget()
-                        ],
+                    ],
+                  )),
+                  Expanded(
+                      child: Column(
+                    children: [
+                      const Text(
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        'Others'),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            for (var i = 0; i < 10; i++) ProductWidget()
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )),
-                Expanded(
-                    child: Column(
-                  children: [
-                    const Text('Others'),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          for (var i = 0; i < 10; i++) ProductWidget()
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
-                // SizedBox(
-                //   width: 300,
-                //   child: ListView(
-                //     children: [for (var i = 0; i < 10; i++) ProductWidget()],
-                //   ),
-                // ),
-                // SizedBox(
-                //   width: 300,
-                //   child: ListView(
-                //     children: [for (var i = 0; i < 10; i++) ProductWidget()],
-                //   ),
-                // ),
-              ],
+                    ],
+                  )),
+                ],
+              ),
             ),
-          ),
-          // Row(
-          //   children: [
-          //     SizedBox(
-          //       height: 300,
-          //       child: ListView(
-          //         scrollDirection: Axis.horizontal,
-          //         children: [ProductWidget(), ProductWidget()],
-          //       ),
-          //     )
-          //   ],
-          // )
-          // Row(
-          //   children: [
-          //     SizedBox(
-          //       height: 200,
-          //       child: ListView(
-          //         scrollDirection: Axis.horizontal,
-          //         children: [for (var i = 0; i < 5; i++) const ImageCard()],
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // Row(children: const [ImageCard(), ImageCard()]),
-          // Row(
-          //   children: [
-          //     ListView(
-          //       scrollDirection: Axis.horizontal,
-          //       children: [for (var i = 0; i < 1; i++) const ImageCard()],
-          //     )
-          //   ],
-          //   // children: [
-          //   //   SafeArea(
-          //   //       child: Column(
-          //   //     children: [
-          //   //       ListView(
-          //   //         children: [for (var i = 0; i < 3; i++) const ImageCard()],
-          //   //       )
-          //   //     ],
-          //   //   ))
-          //   // ],
-          //   // children: [
-          //   //   SafeArea(
-          //   //       child: ListView(
-          //   //     scrollDirection: Axis.horizontal,
-          //   //     children: [for (var i = 0; i < 3; i++) const ImageCard()],
-          //   //   ))
-          //   // ],
-          // ),
-          // Row(children: const [ImageCard()])
-        ],
-      )),
-    );
+          ],
+        )),
+      );
+    });
   }
 }
 
@@ -276,7 +223,12 @@ class ImageCard extends StatelessWidget {
 class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.black),
+        borderRadius: BorderRadius.circular(16),
+        ),
+      child: Row(
       children: [
         const Padding(
           padding: EdgeInsets.all(8.0),
@@ -288,12 +240,13 @@ class ProductWidget extends StatelessWidget {
           children: [
             Text(
               'Product Name Here',
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             const Text('Price Here'),
           ],
         ),
       ],
+    ),
     );
   }
 }
