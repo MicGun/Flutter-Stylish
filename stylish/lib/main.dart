@@ -42,7 +42,7 @@ class _ProductsPage extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(
+      var webLayout = Scaffold(
         appBar: AppBar(title: const Text('stylish')),
         body: Center(
             child: Column(
@@ -62,8 +62,9 @@ class _ProductsPage extends State<ProductsPage> {
                       child: Column(
                     children: [
                       const Text(
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        'Men'),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          'Men'),
                       Expanded(
                         child: ListView(
                           children: [
@@ -77,9 +78,10 @@ class _ProductsPage extends State<ProductsPage> {
                       child: Column(
                     children: [
                       const Text(
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                         'Male',
-                        ),
+                      ),
                       Expanded(
                         child: ListView(
                           children: [
@@ -93,8 +95,9 @@ class _ProductsPage extends State<ProductsPage> {
                       child: Column(
                     children: [
                       const Text(
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        'Others'),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          'Others'),
                       Expanded(
                         child: ListView(
                           children: [
@@ -110,6 +113,83 @@ class _ProductsPage extends State<ProductsPage> {
           ],
         )),
       );
+      var mobileLayout = Scaffold(
+        appBar: AppBar(title: const Text('stylish')),
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 170,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [for (var i = 0; i < 5; i++) const ImageCard()],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Column(
+                    children: [
+                      const Text(
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          'Men'),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            for (var i = 0; i < 10; i++) ProductWidget()
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
+                  // Expanded(
+                  //     child: Column(
+                  //   children: [
+                  //     const Text(
+                  //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  //       'Male',
+                  //       ),
+                  //     Expanded(
+                  //       child: ListView(
+                  //         children: [
+                  //           for (var i = 0; i < 10; i++) ProductWidget()
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )),
+                  // Expanded(
+                  //     child: Column(
+                  //   children: [
+                  //     const Text(
+                  //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  //       'Others'),
+                  //     Expanded(
+                  //       child: ListView(
+                  //         children: [
+                  //           for (var i = 0; i < 10; i++) ProductWidget()
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )),
+                ],
+              ),
+            ),
+          ],
+        )),
+      );
+      Scaffold layout;
+
+      if (constraints.maxWidth > 700) {
+        layout = webLayout;
+      } else {
+        layout = mobileLayout;
+      }
+      return layout;
     });
   }
 }
@@ -227,26 +307,26 @@ class ProductWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         side: const BorderSide(color: Colors.black),
         borderRadius: BorderRadius.circular(16),
-        ),
+      ),
       child: Row(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(Icons.account_circle, size: 50),
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Product Name Here',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const Text('Price Here'),
-          ],
-        ),
-      ],
-    ),
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.account_circle, size: 50),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Product Name Here',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const Text('Price Here'),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
