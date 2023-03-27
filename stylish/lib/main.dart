@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:stylish/product.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,7 +42,12 @@ class _ProductsPage extends State<ProductsPage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
-        appBar: AppBar(title: Image.asset('images/stylish_logo02.png', height: 24, fit: BoxFit.fitHeight,)),
+        appBar: AppBar(
+            title: Image.asset(
+          'images/stylish_logo02.png',
+          height: 24,
+          fit: BoxFit.fitHeight,
+        )),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -57,55 +62,30 @@ class _ProductsPage extends State<ProductsPage> {
             Expanded(
               child: Row(
                 children: [
-                  Expanded(
-                      child: Column(
-                    children: [
-                      const Text(
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          'Men'),
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/men_clothes.jpg',)
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
-                  Expanded(
-                      child: Column(
-                    children: [
-                      const Text(
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                        'Women',
-                      ),
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/women_clothes.jpg',)
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
-                  Expanded(
-                      child: Column(
-                    children: [
-                      const Text(
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          'Others'),
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/accessories.jpg',)
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
+                  ProductListWeiget(products: [
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                  ],),
+                  ProductListWeiget(products: [
+                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
+                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
+                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
+                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
+                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
+                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
+                  ],),
+                  ProductListWeiget(products: [
+                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
+                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
+                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
+                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
+                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
+                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
+                  ],),
                 ],
               ),
             ),
@@ -113,7 +93,12 @@ class _ProductsPage extends State<ProductsPage> {
         )),
       );
       var mobileLayout = Scaffold(
-        appBar: AppBar(title: Image.asset('images/stylish_logo02.png', height: 24, fit: BoxFit.fitHeight,)),
+        appBar: AppBar(
+            title: Image.asset(
+          'images/stylish_logo02.png',
+          height: 24,
+          fit: BoxFit.fitHeight,
+        )),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -128,54 +113,15 @@ class _ProductsPage extends State<ProductsPage> {
             Expanded(
               child: Row(
                 children: [
-                  Expanded(
-                      child: Column(
-                    children: [
-                      const Text(
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          'Men'),
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/men_clothes.jpg',)
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
-                  // Expanded(
-                  //     child: Column(
-                  //   children: [
-                  //     const Text(
-                  //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  //       'Male',
-                  //       ),
-                  //     Expanded(
-                  //       child: ListView(
-                  //         children: [
-                  //           for (var i = 0; i < 10; i++) ProductWidget()
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )),
-                  // Expanded(
-                  //     child: Column(
-                  //   children: [
-                  //     const Text(
-                  //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  //       'Others'),
-                  //     Expanded(
-                  //       child: ListView(
-                  //         children: [
-                  //           for (var i = 0; i < 10; i++) ProductWidget()
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )),
-                ],
+                  ProductListWeiget(products: [
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
+                  ],),
+                ]
               ),
             ),
           ],
@@ -183,6 +129,36 @@ class _ProductsPage extends State<ProductsPage> {
       );
       return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
+  }
+}
+
+class ProductListWeiget extends StatelessWidget {
+  ProductListWeiget({
+    super.key,
+    required this.products,
+  });
+
+  List<Product> products;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: Column(
+      children: [
+        const Text(
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), '男裝'),
+        Expanded(
+          child: ListView(
+            children: [
+              for (Product product in products)
+                ProductWidget(
+                  product: product,
+                )
+            ],
+          ),
+        )
+      ],
+    ));
   }
 }
 
@@ -319,9 +295,9 @@ class ImageCard extends StatelessWidget {
 }
 
 class ProductWidget extends StatelessWidget {
-  ProductWidget({super.key, required this.src});
+  ProductWidget({super.key, required this.product});
 
-  String src;
+  Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +314,7 @@ class ProductWidget extends StatelessWidget {
               bottomLeft: Radius.circular(8.0),
             ),
             child: Image(
-              image: AssetImage(src),
+              image: AssetImage(product.imageSrc),
               fit: BoxFit.fill,
               height: 100,
               width: 80,
@@ -352,10 +328,10 @@ class ProductWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Product Name Here',
+                product.productName,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              const Text('Price Here'),
+              Text('${product.currency} ${product.price}'),
             ],
           ),
         ],
