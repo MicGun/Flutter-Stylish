@@ -62,30 +62,93 @@ class _ProductsPage extends State<ProductsPage> {
             Expanded(
               child: Row(
                 children: [
-                  ProductListWeiget(products: [
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                  ],),
-                  ProductListWeiget(products: [
-                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
-                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
-                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
-                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
-                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
-                    Product(productName: '超漂亮約會裝扮', imageSrc: 'images/women_clothes.jpg', price: '399'),
-                  ],),
-                  ProductListWeiget(products: [
-                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
-                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
-                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
-                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
-                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
-                    Product(productName: '必備率性皮帶', imageSrc: 'images/accessories.jpg', price: '199'),
-                  ],),
+                  ProductListWeiget(
+                    listTitle: '男裝',
+                    products: [
+                      Product(
+                          productName: '超帥氣襯衫',
+                          imageSrc: 'images/men_clothes.jpg',
+                          price: '299'),
+                      Product(
+                          productName: '超帥氣襯衫',
+                          imageSrc: 'images/men_clothes.jpg',
+                          price: '299'),
+                      Product(
+                          productName: '超帥氣襯衫',
+                          imageSrc: 'images/men_clothes.jpg',
+                          price: '299'),
+                      Product(
+                          productName: '超帥氣襯衫',
+                          imageSrc: 'images/men_clothes.jpg',
+                          price: '299'),
+                      Product(
+                          productName: '超帥氣襯衫',
+                          imageSrc: 'images/men_clothes.jpg',
+                          price: '299'),
+                      Product(
+                          productName: '超帥氣襯衫',
+                          imageSrc: 'images/men_clothes.jpg',
+                          price: '299'),
+                    ],
+                  ),
+                  ProductListWeiget(
+                    listTitle: '女裝',
+                    products: [
+                      Product(
+                          productName: '超漂亮約會裝扮',
+                          imageSrc: 'images/women_clothes.jpg',
+                          price: '399'),
+                      Product(
+                          productName: '超漂亮約會裝扮',
+                          imageSrc: 'images/women_clothes.jpg',
+                          price: '399'),
+                      Product(
+                          productName: '超漂亮約會裝扮',
+                          imageSrc: 'images/women_clothes.jpg',
+                          price: '399'),
+                      Product(
+                          productName: '超漂亮約會裝扮',
+                          imageSrc: 'images/women_clothes.jpg',
+                          price: '399'),
+                      Product(
+                          productName: '超漂亮約會裝扮',
+                          imageSrc: 'images/women_clothes.jpg',
+                          price: '399'),
+                      Product(
+                          productName: '超漂亮約會裝扮',
+                          imageSrc: 'images/women_clothes.jpg',
+                          price: '399'),
+                    ],
+                  ),
+                  ProductListWeiget(
+                    listTitle: '配件',
+                    products: [
+                      Product(
+                          productName: '必備率性皮帶',
+                          imageSrc: 'images/accessories.jpg',
+                          price: '199'),
+                      Product(
+                          productName: '必備率性皮帶',
+                          imageSrc: 'images/accessories.jpg',
+                          price: '199'),
+                      Product(
+                          productName: '必備率性皮帶',
+                          imageSrc: 'images/accessories.jpg',
+                          price: '199'),
+                      Product(
+                          productName: '必備率性皮帶',
+                          imageSrc: 'images/accessories.jpg',
+                          price: '199'),
+                      Product(
+                          productName: '必備率性皮帶',
+                          imageSrc: 'images/accessories.jpg',
+                          price: '199'),
+                      Product(
+                          productName: '必備率性皮帶',
+                          imageSrc: 'images/accessories.jpg',
+                          price: '199'),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -111,18 +174,37 @@ class _ProductsPage extends State<ProductsPage> {
               ),
             ),
             Expanded(
-              child: Row(
-                children: [
-                  ProductListWeiget(products: [
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                    Product(productName: '超帥氣襯衫', imageSrc: 'images/men_clothes.jpg', price: '299'),
-                  ],),
-                ]
-              ),
+              child: Row(children: [
+                ProductListWeiget(
+                  listTitle: '男裝',
+                  products: [
+                    Product(
+                        productName: '超帥氣襯衫',
+                        imageSrc: 'images/men_clothes.jpg',
+                        price: '299'),
+                    Product(
+                        productName: '超帥氣襯衫',
+                        imageSrc: 'images/men_clothes.jpg',
+                        price: '299'),
+                    Product(
+                        productName: '超帥氣襯衫',
+                        imageSrc: 'images/men_clothes.jpg',
+                        price: '299'),
+                    Product(
+                        productName: '超帥氣襯衫',
+                        imageSrc: 'images/men_clothes.jpg',
+                        price: '299'),
+                    Product(
+                        productName: '超帥氣襯衫',
+                        imageSrc: 'images/men_clothes.jpg',
+                        price: '299'),
+                    Product(
+                        productName: '超帥氣襯衫',
+                        imageSrc: 'images/men_clothes.jpg',
+                        price: '299'),
+                  ],
+                ),
+              ]),
             ),
           ],
         )),
@@ -136,17 +218,19 @@ class ProductListWeiget extends StatelessWidget {
   ProductListWeiget({
     super.key,
     required this.products,
+    required this.listTitle,
   });
 
   List<Product> products;
+  String listTitle;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
         child: Column(
       children: [
-        const Text(
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), '男裝'),
+        Text(
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold), listTitle),
         Expanded(
           child: ListView(
             children: [
