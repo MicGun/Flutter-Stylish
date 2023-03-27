@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: const ProductsPage(),
     );
@@ -43,7 +42,7 @@ class _ProductsPage extends State<ProductsPage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
-        appBar: AppBar(title: const Text('stylish')),
+        appBar: AppBar(title: Image.asset('images/stylish_logo02.png', height: 24, fit: BoxFit.fitHeight,)),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +67,7 @@ class _ProductsPage extends State<ProductsPage> {
                       Expanded(
                         child: ListView(
                           children: [
-                            for (var i = 0; i < 10; i++) ProductWidget()
+                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/men_clothes.jpg',)
                           ],
                         ),
                       )
@@ -80,12 +79,12 @@ class _ProductsPage extends State<ProductsPage> {
                       const Text(
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
-                        'Male',
+                        'Women',
                       ),
                       Expanded(
                         child: ListView(
                           children: [
-                            for (var i = 0; i < 10; i++) ProductWidget()
+                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/women_clothes.jpg',)
                           ],
                         ),
                       ),
@@ -101,7 +100,7 @@ class _ProductsPage extends State<ProductsPage> {
                       Expanded(
                         child: ListView(
                           children: [
-                            for (var i = 0; i < 10; i++) ProductWidget()
+                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/accessories.jpg',)
                           ],
                         ),
                       ),
@@ -114,7 +113,7 @@ class _ProductsPage extends State<ProductsPage> {
         )),
       );
       var mobileLayout = Scaffold(
-        appBar: AppBar(title: const Text('stylish')),
+        appBar: AppBar(title: Image.asset('images/stylish_logo02.png', height: 24, fit: BoxFit.fitHeight,)),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +138,7 @@ class _ProductsPage extends State<ProductsPage> {
                       Expanded(
                         child: ListView(
                           children: [
-                            for (var i = 0; i < 10; i++) ProductWidget()
+                            for (var i = 0; i < 10; i++) ProductWidget(src: 'images/men_clothes.jpg',)
                           ],
                         ),
                       )
@@ -182,14 +181,7 @@ class _ProductsPage extends State<ProductsPage> {
           ],
         )),
       );
-      Scaffold layout;
-
-      if (constraints.maxWidth > 700) {
-        layout = webLayout;
-      } else {
-        layout = mobileLayout;
-      }
-      return layout;
+      return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
   }
 }
@@ -286,12 +278,38 @@ class ImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Column(
+          children: [
+            const ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                topRight: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0),
+              ),
+              child: Image(
+                image: AssetImage('images/muji_banner.jpg'),
+                fit: BoxFit.fill,
+                height: 150,
+                width: 300,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding placeholder() {
+    return const Padding(
+      padding: EdgeInsets.all(10),
       // ignore: prefer_const_constructors
       child: Card(
         color: Colors.amberAccent,
         borderOnForeground: true,
-        child: const SizedBox(
+        child: SizedBox(
           height: 150,
           width: 300,
         ),
@@ -301,18 +319,33 @@ class ImageCard extends StatelessWidget {
 }
 
 class ProductWidget extends StatelessWidget {
+  ProductWidget({super.key, required this.src});
+
+  String src;
+
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         side: const BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.account_circle, size: 50),
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+            ),
+            child: Image(
+              image: AssetImage(src),
+              fit: BoxFit.fill,
+              height: 100,
+              width: 80,
+            ),
+          ),
+          const SizedBox(
+            width: 8,
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
