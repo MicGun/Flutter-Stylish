@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stylish/FakeRepo.dart';
 import 'package:stylish/product.dart';
+
+import 'ImageCardWeiget.dart';
+import 'ProductListWeiget.dart';
+import 'ProductWidget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,17 +37,18 @@ class MyApp extends StatelessWidget {
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
-
   @override
   State<ProductsPage> createState() => _ProductsPage();
 }
 
 class _ProductsPage extends State<ProductsPage> {
+  FakeRepo repo = FakeRepo();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xFFF1F4F8),
             title: Image.asset(
           'images/stylish_logo02.png',
           height: 24,
@@ -56,98 +62,23 @@ class _ProductsPage extends State<ProductsPage> {
               height: 170,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [for (var i = 0; i < 5; i++) const ImageCard()],
+                children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
               ),
             ),
             Expanded(
               child: Row(
                 children: [
-                  ProductListWeiget(
+                  ProductListWidget(
                     listTitle: '男裝',
-                    products: [
-                      Product(
-                          productName: '超帥氣襯衫',
-                          imageSrc: 'images/men_clothes.jpg',
-                          price: '299'),
-                      Product(
-                          productName: '超帥氣襯衫',
-                          imageSrc: 'images/men_clothes.jpg',
-                          price: '299'),
-                      Product(
-                          productName: '超帥氣襯衫',
-                          imageSrc: 'images/men_clothes.jpg',
-                          price: '299'),
-                      Product(
-                          productName: '超帥氣襯衫',
-                          imageSrc: 'images/men_clothes.jpg',
-                          price: '299'),
-                      Product(
-                          productName: '超帥氣襯衫',
-                          imageSrc: 'images/men_clothes.jpg',
-                          price: '299'),
-                      Product(
-                          productName: '超帥氣襯衫',
-                          imageSrc: 'images/men_clothes.jpg',
-                          price: '299'),
-                    ],
+                    products: repo.getMenProducts(),
                   ),
-                  ProductListWeiget(
+                  ProductListWidget(
                     listTitle: '女裝',
-                    products: [
-                      Product(
-                          productName: '超漂亮約會裝扮',
-                          imageSrc: 'images/women_clothes.jpg',
-                          price: '399'),
-                      Product(
-                          productName: '超漂亮約會裝扮',
-                          imageSrc: 'images/women_clothes.jpg',
-                          price: '399'),
-                      Product(
-                          productName: '超漂亮約會裝扮',
-                          imageSrc: 'images/women_clothes.jpg',
-                          price: '399'),
-                      Product(
-                          productName: '超漂亮約會裝扮',
-                          imageSrc: 'images/women_clothes.jpg',
-                          price: '399'),
-                      Product(
-                          productName: '超漂亮約會裝扮',
-                          imageSrc: 'images/women_clothes.jpg',
-                          price: '399'),
-                      Product(
-                          productName: '超漂亮約會裝扮',
-                          imageSrc: 'images/women_clothes.jpg',
-                          price: '399'),
-                    ],
+                    products: repo.getWomenProducts(),
                   ),
-                  ProductListWeiget(
+                  ProductListWidget(
                     listTitle: '配件',
-                    products: [
-                      Product(
-                          productName: '必備率性皮帶',
-                          imageSrc: 'images/accessories.jpg',
-                          price: '199'),
-                      Product(
-                          productName: '必備率性皮帶',
-                          imageSrc: 'images/accessories.jpg',
-                          price: '199'),
-                      Product(
-                          productName: '必備率性皮帶',
-                          imageSrc: 'images/accessories.jpg',
-                          price: '199'),
-                      Product(
-                          productName: '必備率性皮帶',
-                          imageSrc: 'images/accessories.jpg',
-                          price: '199'),
-                      Product(
-                          productName: '必備率性皮帶',
-                          imageSrc: 'images/accessories.jpg',
-                          price: '199'),
-                      Product(
-                          productName: '必備率性皮帶',
-                          imageSrc: 'images/accessories.jpg',
-                          price: '199'),
-                    ],
+                    products: repo.getAccessoryProducts(),
                   ),
                 ],
               ),
@@ -170,39 +101,14 @@ class _ProductsPage extends State<ProductsPage> {
               height: 170,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [for (var i = 0; i < 5; i++) const ImageCard()],
+                children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
               ),
             ),
             Expanded(
               child: Row(children: [
-                ProductListWeiget(
+                ProductListWidget(
                   listTitle: '男裝',
-                  products: [
-                    Product(
-                        productName: '超帥氣襯衫',
-                        imageSrc: 'images/men_clothes.jpg',
-                        price: '299'),
-                    Product(
-                        productName: '超帥氣襯衫',
-                        imageSrc: 'images/men_clothes.jpg',
-                        price: '299'),
-                    Product(
-                        productName: '超帥氣襯衫',
-                        imageSrc: 'images/men_clothes.jpg',
-                        price: '299'),
-                    Product(
-                        productName: '超帥氣襯衫',
-                        imageSrc: 'images/men_clothes.jpg',
-                        price: '299'),
-                    Product(
-                        productName: '超帥氣襯衫',
-                        imageSrc: 'images/men_clothes.jpg',
-                        price: '299'),
-                    Product(
-                        productName: '超帥氣襯衫',
-                        imageSrc: 'images/men_clothes.jpg',
-                        price: '299'),
-                  ],
+                  products: repo.getMenProducts(),
                 ),
               ]),
             ),
@@ -211,38 +117,6 @@ class _ProductsPage extends State<ProductsPage> {
       );
       return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
-  }
-}
-
-class ProductListWeiget extends StatelessWidget {
-  ProductListWeiget({
-    super.key,
-    required this.products,
-    required this.listTitle,
-  });
-
-  List<Product> products;
-  String listTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-        child: Column(
-      children: [
-        Text(
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold), listTitle),
-        Expanded(
-          child: ListView(
-            children: [
-              for (Product product in products)
-                ProductWidget(
-                  product: product,
-                )
-            ],
-          ),
-        )
-      ],
-    ));
   }
 }
 
@@ -327,99 +201,6 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-
-class ImageCard extends StatelessWidget {
-  const ImageCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // ignore: prefer_const_constructors
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: Column(
-          children: [
-            const ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8.0),
-                topRight: Radius.circular(8.0),
-                bottomLeft: Radius.circular(8.0),
-                bottomRight: Radius.circular(8.0),
-              ),
-              child: Image(
-                image: AssetImage('images/muji_banner.jpg'),
-                fit: BoxFit.fill,
-                height: 150,
-                width: 300,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Padding placeholder() {
-    return const Padding(
-      padding: EdgeInsets.all(10),
-      // ignore: prefer_const_constructors
-      child: Card(
-        color: Colors.amberAccent,
-        borderOnForeground: true,
-        child: SizedBox(
-          height: 150,
-          width: 300,
-        ),
-      ),
-    );
-  }
-}
-
-class ProductWidget extends StatelessWidget {
-  ProductWidget({super.key, required this.product});
-
-  Product product;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8.0),
-              bottomLeft: Radius.circular(8.0),
-            ),
-            child: Image(
-              image: AssetImage(product.imageSrc),
-              fit: BoxFit.fill,
-              height: 100,
-              width: 80,
-            ),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                product.productName,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Text('${product.currency} ${product.price}'),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }
