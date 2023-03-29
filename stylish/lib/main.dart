@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stylish/FakeRepo.dart';
+import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/product.dart';
 
 import 'ImageCardWeiget.dart';
@@ -48,7 +49,7 @@ class _ProductsPage extends State<ProductsPage> {
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFFF1F4F8),
+          backgroundColor: const Color(0xF1F4F8),
             title: Image.asset(
           'images/stylish_logo02.png',
           height: 24,
@@ -106,10 +107,11 @@ class _ProductsPage extends State<ProductsPage> {
             ),
             Expanded(
               child: Row(children: [
-                ProductListWidget(
-                  listTitle: '男裝',
-                  products: repo.getMenProducts(),
-                ),
+                // ProductListWidget(
+                //   listTitle: '男裝',
+                //   products: repo.getMenProducts(),
+                // ),
+                ProductListExpansionWidget(productCategories: repo.getAllCategoryProducts())
               ]),
             ),
           ],

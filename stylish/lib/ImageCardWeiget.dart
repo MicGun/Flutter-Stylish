@@ -11,8 +11,8 @@ class ImageCardWeiget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Column(
-          children: [
-            const ClipRRect(
+          children: const [
+            ClipRRect(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8.0),
                 topRight: Radius.circular(8.0),
