@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stylish/FakeRepo.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/product.dart';
@@ -17,22 +18,34 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.grey,
+    return ChangeNotifierProvider(
+      create: (context) => MyAppState(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.grey,
+        ),
+        home: const ProductsPage(),
       ),
-      home: const ProductsPage(),
     );
+  }
+}
+
+class MyAppState extends ChangeNotifier {
+  int selectedItem = -1;
+
+  void itemSelected(int selectedIndex) {
+    selectedItem = selectedIndex;
+    notifyListeners();
   }
 }
 
@@ -49,12 +62,12 @@ class _ProductsPage extends State<ProductsPage> {
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xF1F4F8),
+            backgroundColor: const Color(0xF1F4F8),
             title: Image.asset(
-          'images/stylish_logo02.png',
-          height: 24,
-          fit: BoxFit.fitHeight,
-        )),
+              'images/stylish_logo02.png',
+              height: 24,
+              fit: BoxFit.fitHeight,
+            )),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +124,8 @@ class _ProductsPage extends State<ProductsPage> {
                 //   listTitle: '男裝',
                 //   products: repo.getMenProducts(),
                 // ),
-                ProductListExpansionWidget(productCategories: repo.getAllCategoryProducts())
+                ProductListExpansionWidget(
+                    productCategories: repo.getAllCategoryProducts())
               ]),
             ),
           ],
