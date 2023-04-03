@@ -1,6 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stylish/FakeRepo.dart';
+import 'package:stylish/ProductListExpansionWeiget.dart';
+import 'package:stylish/product.dart';
+
+import 'ImageCardWeiget.dart';
+import 'ProductListWeiget.dart';
+import 'ProductWidget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,38 +18,56 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (context) => MyAppState(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.grey,
+        ),
+        home: const ProductsPage(),
       ),
-      home: const ProductsPage(),
     );
+  }
+}
+
+class MyAppState extends ChangeNotifier {
+  int selectedItem = -1;
+
+  void itemSelected(int selectedIndex) {
+    selectedItem = selectedIndex;
+    notifyListeners();
   }
 }
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
-
   @override
   State<ProductsPage> createState() => _ProductsPage();
 }
 
 class _ProductsPage extends State<ProductsPage> {
+  FakeRepo repo = FakeRepo();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('stylish')),
+      var webLayout = Scaffold(
+        appBar: AppBar(
+            backgroundColor: const Color(0xF1F4F8),
+            title: Image.asset(
+              'images/stylish_logo02.png',
+              height: 24,
+              fit: BoxFit.fitHeight,
+            )),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,64 +76,62 @@ class _ProductsPage extends State<ProductsPage> {
               height: 170,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [for (var i = 0; i < 5; i++) const ImageCard()],
+                children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
               ),
             ),
             Expanded(
               child: Row(
                 children: [
-                  Expanded(
-                      child: Column(
-                    children: [
-                      const Text(
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        'Men'),
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            for (var i = 0; i < 10; i++) ProductWidget()
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
-                  Expanded(
-                      child: Column(
-                    children: [
-                      const Text(
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        'Male',
-                        ),
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            for (var i = 0; i < 10; i++) ProductWidget()
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
-                  Expanded(
-                      child: Column(
-                    children: [
-                      const Text(
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        'Others'),
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            for (var i = 0; i < 10; i++) ProductWidget()
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
+                  ProductListWidget(
+                    listTitle: '男裝',
+                    products: repo.getMenProducts(),
+                  ),
+                  ProductListWidget(
+                    listTitle: '女裝',
+                    products: repo.getWomenProducts(),
+                  ),
+                  ProductListWidget(
+                    listTitle: '配件',
+                    products: repo.getAccessoryProducts(),
+                  ),
                 ],
               ),
             ),
           ],
         )),
       );
+      var mobileLayout = Scaffold(
+        appBar: AppBar(
+            title: Image.asset(
+          'images/stylish_logo02.png',
+          height: 24,
+          fit: BoxFit.fitHeight,
+        )),
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 170,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
+              ),
+            ),
+            Expanded(
+              child: Row(children: [
+                // ProductListWidget(
+                //   listTitle: '男裝',
+                //   products: repo.getMenProducts(),
+                // ),
+                ProductListExpansionWidget(
+                    productCategories: repo.getAllCategoryProducts())
+              ]),
+            ),
+          ],
+        )),
+      );
+      return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
   }
 }
@@ -195,58 +217,6 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-
-class ImageCard extends StatelessWidget {
-  const ImageCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // ignore: prefer_const_constructors
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      // ignore: prefer_const_constructors
-      child: Card(
-        color: Colors.amberAccent,
-        borderOnForeground: true,
-        child: const SizedBox(
-          height: 150,
-          width: 300,
-        ),
-      ),
-    );
-  }
-}
-
-class ProductWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.circular(16),
-        ),
-      child: Row(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(Icons.account_circle, size: 50),
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Product Name Here',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const Text('Price Here'),
-          ],
-        ),
-      ],
-    ),
     );
   }
 }
