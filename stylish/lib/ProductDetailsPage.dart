@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stylish/ImageCardWeiget.dart';
+import 'package:stylish/ProductVariaantsWidget.dart';
 
 import 'main.dart';
 
@@ -11,7 +12,6 @@ class ProductDetailsPage extends StatefulWidget {
 class _ProductDetailsPage extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
@@ -25,26 +25,36 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
           child: Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Image(
+                                image: AssetImage('images/men_clothes.jpg'),
+                                fit: BoxFit.fill,
+                                height: 500,
+                                width: 360,
+                              ),
+                  ),
+                  ProductVariantsWidget(),
+                ],
+              ),
+              Column(
                 children: const [
+                  ImageCardWeiget(),
+                  ImageCardWeiget(),
+                  ImageCardWeiget(),
+                  ImageCardWeiget(),
+                  ImageCardWeiget(),
+                  ImageCardWeiget(),
                   ImageCardWeiget(),
                   ImageCardWeiget(),
                 ],
               ),
-              Column(
-                  children: const [
-                    ImageCardWeiget(),
-                    ImageCardWeiget(),
-                    ImageCardWeiget(),
-                    ImageCardWeiget(),
-                    ImageCardWeiget(),
-                    ImageCardWeiget(),
-                    ImageCardWeiget(),
-                    ImageCardWeiget(),
-                ],
-                ),
             ],
           ),
-          ),
+        ),
       );
       var mobileLayout = Scaffold(
         appBar: AppBar(
@@ -54,24 +64,31 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
           fit: BoxFit.fitHeight,
         )),
         body: SingleChildScrollView(
-          child: Column(
-            children: const [
-              ImageCardWeiget(),
-              ImageCardWeiget(),
-              ImageCardWeiget(),
-              ImageCardWeiget(),
-              ImageCardWeiget(),
-              ImageCardWeiget(),
-              ImageCardWeiget(),
-              ImageCardWeiget(),
+            child: Column(
+          children: [
+            const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Image(
+                                image: AssetImage('images/men_clothes.jpg'),
+                                fit: BoxFit.fill,
+                                height: 500,
+                                width: 360,
+                              ),
+                  ),
+                  ProductVariantsWidget(),
+            ImageCardWeiget(),
+            ImageCardWeiget(),
+            ImageCardWeiget(),
+            ImageCardWeiget(),
+            ImageCardWeiget(),
+            ImageCardWeiget(),
+            ImageCardWeiget(),
+            ImageCardWeiget(),
           ],
-          )
-          ),
+        )),
       );
 
-      return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
+      return (constraints.maxWidth > 750) ? webLayout : mobileLayout;
     });
   }
-
-  
 }

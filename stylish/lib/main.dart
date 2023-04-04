@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish/FakeRepo.dart';
+import 'package:stylish/ProductDetailsPage.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/product.dart';
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.grey,
         ),
-        home: const ProductsPage(),
+        home: ProductDetailsPage(),
       ),
     );
   }
