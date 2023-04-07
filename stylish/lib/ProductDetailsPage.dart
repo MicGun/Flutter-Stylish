@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stylish/ImageCardWeiget.dart';
 import 'package:stylish/ProductVariaantsWidget.dart';
 
+import 'ProductDetailImagesWidget.dart';
 import 'main.dart';
 
 class ProductDetailsPage extends StatefulWidget {
@@ -41,15 +42,8 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
                 ],
               ),
               Column(
-                children: const [
-                  ImageCardWeiget(),
-                  ImageCardWeiget(),
-                  ImageCardWeiget(),
-                  ImageCardWeiget(),
-                  ImageCardWeiget(),
-                  ImageCardWeiget(),
-                  ImageCardWeiget(),
-                  ImageCardWeiget(),
+                children: [
+                  ProductDetailImagesWidget(),
                 ],
               ),
             ],
@@ -76,14 +70,10 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
                               ),
                   ),
                   ProductVariantsWidget(),
-            ImageCardWeiget(),
-            ImageCardWeiget(),
-            ImageCardWeiget(),
-            ImageCardWeiget(),
-            ImageCardWeiget(),
-            ImageCardWeiget(),
-            ImageCardWeiget(),
-            ImageCardWeiget(),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ProductDetailImagesWidget(),
+                  ),
           ],
         )),
       );
