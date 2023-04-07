@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stylish/ProductVariantIemWithOptionsWidget.dart';
 
 class ProductVariantsWidget extends StatelessWidget {
   const ProductVariantsWidget({super.key});
@@ -31,22 +32,43 @@ class ProductVariantsWidget extends StatelessWidget {
             indent: 0,
             endIndent: 0,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
-            child: IntrinsicHeight(
+          ProductVariantIemWithOptionsWidget(
+            title: '顏色',
+            child: SingleChildScrollView(
               child: Row(
-                children: [
-                  Text('顏色', style: Theme.of(context).textTheme.bodyMedium,),
-                  const VerticalDivider(
-                    width: 16,
-                    thickness: 1,
-                    indent: 0,
-                    endIndent: 0,
+                children: const [
+                Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Card(
+                    color: Colors.red,
+                    child: SizedBox(width: 20, height: 20,),
                   ),
-                ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Card(
+                    color: Colors.yellow,
+                    child: SizedBox(width: 20, height: 20,),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Card(
+                    color: Colors.black,
+                    child: SizedBox(width: 20, height: 20,),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Card(
+                    color: Colors.blue,
+                    child: SizedBox(width: 20, height: 20,),
+                  ),
+                ),
+              ],
               ),
+              )
             ),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 8),
             child: IntrinsicHeight(
