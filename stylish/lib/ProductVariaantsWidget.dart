@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProductVariantsWidget extends StatelessWidget {
+  const ProductVariantsWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

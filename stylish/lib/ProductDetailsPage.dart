@@ -17,11 +17,9 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
-            leading: BackButton(
-              color: Colors.black,
-              onPressed: () {
-                GoRouter.of(context).go('/');
-              },
+          leading: BackButton(
+            color: Colors.black,
+            onPressed: () => GoRouter.of(context).go('/'),
             ),
             backgroundColor: const Color(0xF1F4F8),
             title: Image.asset(
@@ -39,11 +37,11 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('images/men_clothes.jpg'),
-                      fit: BoxFit.fill,
-                      height: 500,
-                      width: 360,
-                    ),
+                                image: AssetImage('images/men_clothes.jpg'),
+                                fit: BoxFit.fill,
+                                height: 500,
+                                width: 360,
+                              ),
                   ),
                   ProductVariantsWidget(),
                 ],
@@ -59,34 +57,32 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
       );
       var mobileLayout = Scaffold(
         appBar: AppBar(
-            leading: BackButton(
-              color: Colors.black,
-              onPressed: () {
-                GoRouter.of(context).go('/');
-              },
+          leading: BackButton(
+            color: Colors.black,
+            onPressed: () => GoRouter.of(context).go('/'),
             ),
             title: Image.asset(
-              'images/stylish_logo02.png',
-              height: 24,
-              fit: BoxFit.fitHeight,
-            )),
+          'images/stylish_logo02.png',
+          height: 24,
+          fit: BoxFit.fitHeight,
+        )),
         body: SingleChildScrollView(
             child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Image(
-                image: AssetImage('images/men_clothes.jpg'),
-                fit: BoxFit.fill,
-                height: 500,
-                width: 360,
-              ),
-            ),
-            ProductVariantsWidget(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ProductDetailImagesWidget(),
-            ),
+                    padding: EdgeInsets.all(8.0),
+                    child: Image(
+                                image: AssetImage('images/men_clothes.jpg'),
+                                fit: BoxFit.fill,
+                                height: 500,
+                                width: 360,
+                              ),
+                  ),
+                  ProductVariantsWidget(),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ProductDetailImagesWidget(),
+                  ),
           ],
         )),
       );
