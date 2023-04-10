@@ -38,26 +38,21 @@ class ExpandableProductCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    return ExpansionTile(
-      initiallyExpanded: appState.selectedItem == index,
-      title: Center(child: Text(productCategory.category)),
-      children: productCategory.products
-          .map((productItem) => ListTile(
-                title: ProductWidget(product: productItem),
-                onTap: () {},
-              ))
-          .toList(),
-      onExpansionChanged: (isExpanded) {
-        appState.itemSelected(isExpanded ? index : -1);
-        // setState(() {
-        //   if (isExpanded) {
-        //     appState.itemSelected(widget.index);
-        //   } else {
-        //     appState.itemSelected(-1);
-        //   }
-        // });
-      },
+    return Consumer<MyAppState>(
+      builder: (context, value, child) => ExpansionTile(
+        key: GlobalKey(),
+        initiallyExpanded: value.selectedItem == index,
+        title: Center(child: Text(productCategory.category)),
+        children: productCategory.products
+            .map((productItem) => ListTile(
+                  title: ProductWidget(product: productItem),
+                  onTap: () {},
+                ))
+            .toList(),
+        onExpansionChanged: (isExpanded) {
+          value.itemSelected(isExpanded ? index : -1);
+        },
+      ),
     );
   }
 }

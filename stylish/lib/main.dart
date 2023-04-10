@@ -116,39 +116,49 @@ class _ProductsPage extends State<ProductsPage> {
           ],
         )),
       );
-      var mobileLayout = Scaffold(
-        appBar: AppBar(
-            title: Image.asset(
-          'images/stylish_logo02.png',
-          height: 24,
-          fit: BoxFit.fitHeight,
-        )),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 170,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
-              ),
-            ),
-            Expanded(
-              child: Row(children: [
-                // ProductListWidget(
-                //   listTitle: '男裝',
-                //   products: repo.getMenProducts(),
-                // ),
-                ProductListExpansionWidget(
-                    productCategories: repo.getAllCategoryProducts())
-              ]),
-            ),
-          ],
-        )),
-      );
+      var mobileLayout = MobileCatalogScreen(repo: repo);
       return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
+  }
+}
+
+class MobileCatalogScreen extends StatelessWidget {
+  const MobileCatalogScreen({
+    super.key,
+    required this.repo,
+  });
+
+  final FakeRepo repo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<MyAppState>(builder: (context, value, child) => Scaffold(
+      appBar: AppBar(
+          title: Image.asset(
+        'images/stylish_logo02.png',
+        height: 24,
+        fit: BoxFit.fitHeight,
+      )),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 170,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
+            ),
+          ),
+          Expanded(
+            child: Row(children: [
+              ProductListExpansionWidget(
+                  productCategories: repo.getAllCategoryProducts())
+            ]),
+          ),
+        ],
+      )),
+    ),);
   }
 }
 
