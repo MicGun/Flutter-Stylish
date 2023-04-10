@@ -7,6 +7,7 @@ class Product {
       required this.imageSrc,
       required this.price,
       required this.variants,
+      required this.currency,
       });
 
   String id;

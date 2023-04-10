@@ -25,7 +25,15 @@ class MyApp extends StatelessWidget {
         ),
         GoRoute(
         path: "/productDetails",
-        builder: (context, state) => ProductDetailsPage(),
+        builder: (context, state) => ProductDetailsPage(
+          product: Product(
+            id: '2023001001',
+            productName: '超帥氣襯衫',
+            imageSrc: 'images/men_clothes.jpg',
+            price: '299',
+            currency: "NT\$",
+            variants: FakeRepo().getFakeVariants()),
+        ),
         ),
     ]
     );
