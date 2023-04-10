@@ -26,7 +26,8 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
               'images/stylish_logo02.png',
               height: 24,
               fit: BoxFit.fitHeight,
-            )),
+            ),
+            ),
         body: SingleChildScrollView(
           child: Column(
             children: [

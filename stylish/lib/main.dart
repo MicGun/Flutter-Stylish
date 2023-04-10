@@ -83,7 +83,17 @@ class _ProductsPage extends State<ProductsPage> {
               'images/stylish_logo02.png',
               height: 24,
               fit: BoxFit.fitHeight,
-            )),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.shopping_bag
+                  ),
+                onPressed: () {
+                  
+              },),
+            ]
+            ),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +148,17 @@ class MobileCatalogScreen extends StatelessWidget {
         'images/stylish_logo02.png',
         height: 24,
         fit: BoxFit.fitHeight,
-      )),
+        ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.shopping_bag
+                  ),
+                onPressed: () {
+                  
+              },),
+            ]
+            ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
