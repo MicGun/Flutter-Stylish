@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish/FakeRepo.dart';
+import 'package:stylish/ProductDetailsPage.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/product.dart';
 
@@ -9,18 +11,32 @@ import 'ProductListWeiget.dart';
 import 'ProductWidget.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final GoRouter _goRouter = GoRouter(
+    routes: [
+        GoRoute(
+        path: "/",
+        builder: (context, state) => const ProductsPage(),
+        ),
+        GoRoute(
+        path: "/productDetails",
+        builder: (context, state) => ProductDetailsPage(),
+        ),
+    ]
+    );
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routerConfig: _goRouter,
         title: 'Flutter Demo',
         theme: ThemeData(
           // This is the theme of your application.
@@ -34,7 +50,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.grey,
         ),
-        home: const ProductsPage(),
+        // home: ProductDetailsPage(),
       ),
     );
   }
