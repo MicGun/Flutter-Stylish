@@ -105,7 +105,7 @@ class CartProductWidget extends StatelessWidget {
                         height: 8,
                       ),
                       Text(
-                          '總金額 ${product.currency} ${getTotalPrice(product.amount, product.price)}'),
+                          '總金額 ${product.currency} ${product.totalPrice}'),
                     ],
                   ),
                 ],
@@ -120,18 +120,18 @@ class CartProductWidget extends StatelessWidget {
     );
   }
 
-  String getTotalPrice(int amount, String? price) {
-    if (price == null || price == '') {
-      return 0.toString();
-    }
+  // String getTotalPrice(int amount, String? price) {
+  //   if (price == null || price == '') {
+  //     return 0.toString();
+  //   }
 
-    int? priceInt = int.tryParse(price);
-    if (priceInt == null) {
-      return '0';
-    } else {
-      return (amount * priceInt).toString();
-    }
-  }
+  //   int? priceInt = int.tryParse(price);
+  //   if (priceInt == null) {
+  //     return '0';
+  //   } else {
+  //     return (amount * priceInt).toString();
+  //   }
+  // }
 
   Color hexToColor(String hexString, {String alphaChannel = 'FF'}) {
     return Color(int.parse(hexString.replaceFirst('#', '0x$alphaChannel')));

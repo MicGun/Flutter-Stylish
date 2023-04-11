@@ -169,7 +169,7 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                               productName: widget.product.productName,
                               currency: currency,
                               price: price,
-                              totalPrice: '1000',
+                              totalPrice: getTotalPrice(count, price),
                               colorName: '',
                               colorCode: selectedColorCode!,
                               size: sizeValue!,
@@ -205,6 +205,19 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
         ),
       ),
     );
+  }
+
+  String getTotalPrice(int? amount, String? price) {
+    if (price == null || price == '' || amount == null || amount < 1) {
+      return 0.toString();
+    }
+
+    int? priceInt = int.tryParse(price);
+    if (priceInt == null) {
+      return '0';
+    } else {
+      return (amount * priceInt).toString();
+    }
   }
 
   List<Widget> getColorOptionWidgets(Product product) {
