@@ -108,7 +108,7 @@ class _ProductsPage extends State<ProductsPage> {
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.shopping_bag),
+                icon: Icon(Icons.add_shopping_cart,  color: Colors.white,),
                 onPressed: () {
                   GoRouter.of(context).go('/shoppingCart');
                 },
@@ -188,7 +188,7 @@ class MobileCatalogScreen extends StatelessWidget {
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.shopping_bag),
+                icon: Icon(Icons.add_shopping_cart, color: Colors.white,),
                 onPressed: () {
                   GoRouter.of(context).go('/shoppingCart');
                 },

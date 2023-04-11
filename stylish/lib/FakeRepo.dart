@@ -100,42 +100,42 @@ class FakeRepo {
             imageSrc: 'images/accessories.jpg',
             price: '199',
             currency: "NT\$",
-            variants: getFakeVariants()),
+            variants: getFakeAccessorVariants()),
         Product(
             id: '2023001001',
             productName: '必備率性皮帶',
             imageSrc: 'images/accessories.jpg',
             price: '199',
             currency: "NT\$",
-            variants: getFakeVariants()),
+            variants: getFakeAccessorVariants()),
         Product(
             id: '2023001001',
             productName: '必備率性皮帶',
             imageSrc: 'images/accessories.jpg',
             price: '199',
             currency: "NT\$",
-            variants: getFakeVariants()),
+            variants: getFakeAccessorVariants()),
         Product(
             id: '2023001001',
             productName: '必備率性皮帶',
             imageSrc: 'images/accessories.jpg',
             price: '199',
             currency: "NT\$",
-            variants: getFakeVariants()),
+            variants: getFakeAccessorVariants()),
         Product(
             id: '2023001001',
             productName: '必備率性皮帶',
             imageSrc: 'images/accessories.jpg',
             price: '199',
             currency: "NT\$",
-            variants: getFakeVariants()),
+            variants: getFakeAccessorVariants()),
         Product(
             id: '2023001001',
             productName: '必備率性皮帶',
             imageSrc: 'images/accessories.jpg',
             price: '199',
             currency: "NT\$",
-            variants: getFakeVariants()),
+            variants: getFakeAccessorVariants()),
       ];
 
   List<ProductCategory> getAllCategoryProducts() => <ProductCategory>[
@@ -157,5 +157,12 @@ class FakeRepo {
     ProductVariant(id: '010', size: 'XL', colorName: 'Red', colorCode: '#ff0000', inStock: true),
     ProductVariant(id: '011', size: 'XL', colorName: 'Blue', colorCode: '#0000ff', inStock: true),
     ProductVariant(id: '012', size: 'XL', colorName: 'Yellow', colorCode: '#ffff00', inStock: true),
+  ];
+
+  List<ProductVariant> getFakeAccessorVariants() => <ProductVariant>[
+    ProductVariant(id: '001', size: 'M', colorName: 'Black', colorCode: '#000000', inStock: true),
+    ProductVariant(id: '002', size: 'M', colorName: 'Brown', colorCode: '#993300', inStock: true),
+    ProductVariant(id: '003', size: 'XL', colorName: 'Black', colorCode: '#000000', inStock: true),
+    ProductVariant(id: '004', size: 'XL', colorName: 'Brown', colorCode: '#993300', inStock: true),
   ];
 }

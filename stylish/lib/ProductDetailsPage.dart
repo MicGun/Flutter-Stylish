@@ -43,10 +43,10 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('images/men_clothes.jpg'),
+                      image: AssetImage(product.imageSrc),
                       fit: BoxFit.fill,
                       height: 500,
                       width: 360,
@@ -78,10 +78,10 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
         body: SingleChildScrollView(
             child: Column(
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Image(
-                image: AssetImage('images/men_clothes.jpg'),
+                image: AssetImage(product.imageSrc),
                 fit: BoxFit.fill,
                 height: 500,
                 width: 360,

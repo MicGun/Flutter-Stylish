@@ -117,7 +117,10 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                     border: InputBorder.none,
                     hintText: '$count',
                     prefixIcon: IconButton(
-                      icon: const Icon(Icons.add),
+                      // iconSize: 20,
+                      // padding: EdgeInsets.zero,
+                      // constraints: const BoxConstraints(),
+                      icon: const Icon(Icons.remove),
                       onPressed: () {
                         setState(() {
                           if (count == null || count! < 2) {
@@ -130,6 +133,9 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                       },
                     ),
                     suffixIcon: IconButton(
+                      // iconSize: 20,
+                      // padding: EdgeInsets.zero,
+                      // constraints: const BoxConstraints(),
                       icon: const Icon(Icons.add),
                       onPressed: () {
                         setState(() {
@@ -149,50 +155,52 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: enableAdd2Cart
-                            ? const Color(0xff3f3a3a)
-                            : const Color(0xffe6e6e6),
-                        minimumSize: const Size(320, 60),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: enableAdd2Cart
+                              ? const Color(0xff3f3a3a)
+                              : const Color(0xffe6e6e6),
+                          minimumSize: const Size(320, 60),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
+                            ),
                           ),
                         ),
-                      ),
-                      onPressed: () {
-                        if (enableAdd2Cart) {
-                          CartProduct cartProduct = CartProduct(
-                              id: widget.product.id,
-                              imageSrc: widget.product.imageSrc,
-                              productName: widget.product.productName,
-                              currency: currency,
-                              price: price,
-                              totalPrice: getTotalPrice(count, price),
-                              colorName: '',
-                              colorCode: selectedColorCode!,
-                              size: sizeValue!,
-                              amount: count!);
-                          value.addProduct2Cart(cartProduct);
-                          setState(() {
-                            count = 1;
-                            selectedColorCode = '';
-                            sizeValue = '';
-                          });
-                          _controller.text = 1.toString();
-                        }
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          '加入購物車',
-                          style: TextStyle(
-                            color: enableAdd2Cart
-                                ? Color(0xffffffff)
-                                : Color(0xff575a69),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        onPressed: () {
+                          if (enableAdd2Cart) {
+                            CartProduct cartProduct = CartProduct(
+                                id: widget.product.id,
+                                imageSrc: widget.product.imageSrc,
+                                productName: widget.product.productName,
+                                currency: currency,
+                                price: price,
+                                totalPrice: getTotalPrice(count, price),
+                                colorName: '',
+                                colorCode: selectedColorCode!,
+                                size: sizeValue!,
+                                amount: count!);
+                            value.addProduct2Cart(cartProduct);
+                            setState(() {
+                              count = 1;
+                              selectedColorCode = '';
+                              sizeValue = '';
+                            });
+                            _controller.text = 1.toString();
+                          }
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            '加入購物車',
+                            style: TextStyle(
+                              color: enableAdd2Cart
+                                  ? Color(0xffffffff)
+                                  : Color(0xff575a69),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

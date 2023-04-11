@@ -90,8 +90,8 @@ class CartProductWidget extends StatelessWidget {
                       IconButton(
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
-                        iconSize: 16,
-                        icon: const Icon(Icons.close),
+                        iconSize: 24,
+                        icon: const Icon(Icons.delete_outline),
                         onPressed: () {
                           removeProductListener(product);
                         },
