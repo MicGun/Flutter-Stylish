@@ -4,9 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:stylish/product.dart';
 
 class ProductWidget extends StatelessWidget {
-  ProductWidget({super.key, required this.product});
+  ProductWidget({
+    super.key, 
+    required this.product,
+    required this.onProductTap,
+    });
 
   Product product;
+  ValueSetter<Product> onProductTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class ProductWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
-        onTap:() => GoRouter.of(context).go('/productDetails'),
+        onTap:() => GoRouter.of(context).go('/productDetails', extra: product),
         child: Row(
           children: [
             ClipRRect(

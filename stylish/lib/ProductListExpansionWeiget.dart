@@ -11,10 +11,11 @@ class ProductListExpansionWidget extends StatelessWidget {
   ProductListExpansionWidget({
     super.key,
     required this.productCategories,
+    required this.onProductTap,
   });
 
   List<ProductCategory> productCategories;
-
+  ValueSetter<Product> onProductTap;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -24,18 +25,24 @@ class ProductListExpansionWidget extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) =>
                   ExpandableProductCategory(
                       index: index,
-                      productCategory: productCategories[index]))),
+                      productCategory: productCategories[index],
+                      onProductTap: onProductTap,
+                      ))),
     );
   }
 }
 
 class ExpandableProductCategory extends StatelessWidget {
-  ExpandableProductCategory(
-      {super.key, required this.productCategory, required this.index});
+  ExpandableProductCategory({
+    super.key, 
+    required this.productCategory, 
+    required this.index,
+    required this.onProductTap,
+    });
 
   int index;
   ProductCategory productCategory;
-
+  ValueSetter<Product> onProductTap;
   @override
   Widget build(BuildContext context) {
     return Consumer<MyAppState>(
@@ -45,7 +52,10 @@ class ExpandableProductCategory extends StatelessWidget {
         title: Center(child: Text(productCategory.category)),
         children: productCategory.products
             .map((productItem) => ListTile(
-                  title: ProductWidget(product: productItem),
+                  title: ProductWidget(
+                    product: productItem,
+                    onProductTap: onProductTap,
+                    ),
                   onTap: () {},
                 ))
             .toList(),

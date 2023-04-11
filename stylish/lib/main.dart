@@ -26,14 +26,14 @@ class MyApp extends StatelessWidget {
     ),
     GoRoute(
       path: "/productDetails",
-      builder: (context, state) => ProductDetailsPage(
-        product: Product(
-            id: '2023001001',
-            productName: '超帥氣襯衫',
-            imageSrc: 'images/men_clothes.jpg',
-            price: '299',
-            currency: "NT\$",
-            variants: FakeRepo().getFakeVariants()),
+      builder: (context, state) => ProductDetailsPage(product: state.extra as Product,
+        // product: Product(
+        //     id: '2023001001',
+        //     productName: '超帥氣襯衫',
+        //     imageSrc: 'images/men_clothes.jpg',
+        //     price: '299',
+        //     currency: "NT\$",
+        //     variants: FakeRepo().getFakeVariants()),
       ),
     ),
     GoRoute(
@@ -131,14 +131,23 @@ class _ProductsPage extends State<ProductsPage> {
                   ProductListWidget(
                     listTitle: '男裝',
                     products: repo.getMenProducts(),
+                    onProductTap: (product) {
+                      
+                    },
                   ),
                   ProductListWidget(
                     listTitle: '女裝',
                     products: repo.getWomenProducts(),
+                    onProductTap: (product) {
+                      
+                    },
                   ),
                   ProductListWidget(
                     listTitle: '配件',
                     products: repo.getAccessoryProducts(),
+                    onProductTap: (product) {
+                      
+                    },
                   ),
                 ],
               ),
@@ -146,19 +155,26 @@ class _ProductsPage extends State<ProductsPage> {
           ],
         )),
       );
-      var mobileLayout = MobileCatalogScreen(repo: repo);
+      var mobileLayout = MobileCatalogScreen(
+        repo: repo,
+        onProductTap: (value) {
+          
+        },
+        );
       return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
   }
 }
 
 class MobileCatalogScreen extends StatelessWidget {
-  const MobileCatalogScreen({
+    MobileCatalogScreen({
     super.key,
     required this.repo,
+    required this.onProductTap,
   });
 
   final FakeRepo repo;
+  ValueSetter<Product> onProductTap;
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +208,9 @@ class MobileCatalogScreen extends StatelessWidget {
             Expanded(
               child: Row(children: [
                 ProductListExpansionWidget(
-                    productCategories: repo.getAllCategoryProducts())
+                    productCategories: repo.getAllCategoryProducts(),
+                    onProductTap: onProductTap,
+                    ),
               ]),
             ),
           ],
