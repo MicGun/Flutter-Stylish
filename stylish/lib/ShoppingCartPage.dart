@@ -19,9 +19,9 @@ class _ShoppingCartPage extends State<ShoppingCartPage> {
       builder: (context, value, child) => Scaffold(
         appBar: AppBar(
           leading: BackButton(
-              color: Colors.black,
-              onPressed: () => GoRouter.of(context).go('/'),
-            ),
+            color: Colors.black,
+            onPressed: () => GoRouter.of(context).go('/'),
+          ),
           backgroundColor: const Color(0xF1F4F8),
           title: Image.asset(
             'images/stylish_logo02.png',
@@ -29,20 +29,27 @@ class _ShoppingCartPage extends State<ShoppingCartPage> {
             fit: BoxFit.fitHeight,
           ),
         ),
-        body: (value.cartProducts.length == 0)? Center(
-          child: Text('購物車目前沒有商品'),
-        ) : Column(
-          children: [
-            Expanded(
-              child: ListView(
+        body: (value.cartProducts.length == 0)
+            ? Center(
+                child: Text('購物車目前沒有商品'),
+              )
+            : Column(
                 children: [
-                  for (CartProduct product in value.cartProducts)
-                  CartProductWidget(product: product)
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        for (CartProduct product in value.cartProducts)
+                          CartProductWidget(
+                            product: product,
+                            removeProductListener: (product) {
+                              value.removeProductfromCart(product);
+                            },
+                          )
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

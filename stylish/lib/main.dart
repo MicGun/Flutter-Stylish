@@ -80,6 +80,11 @@ class MyAppState extends ChangeNotifier {
     cartProducts.add(product);
     notifyListeners();
   }
+
+  void removeProductfromCart(CartProduct product) {
+    cartProducts.remove(product);
+    notifyListeners();
+  }
 }
 
 class ProductsPage extends StatefulWidget {

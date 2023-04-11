@@ -180,6 +180,7 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                             selectedColorCode = '';
                             sizeValue = '';
                           });
+                          _controller.text = 1.toString();
                         }
                       },
                       child: Padding(

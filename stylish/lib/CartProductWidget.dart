@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -5,9 +7,14 @@ import 'package:stylish/CartProduct.dart';
 import 'package:stylish/product.dart';
 
 class CartProductWidget extends StatelessWidget {
-  CartProductWidget({super.key, required this.product});
+  CartProductWidget({
+    super.key,
+    required this.product,
+    required this.removeProductListener,
+  });
 
   CartProduct product;
+  ValueSetter<CartProduct> removeProductListener;
 
   @override
   Widget build(BuildContext context) {
@@ -80,15 +87,25 @@ class CartProductWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('${product.currency} ${product.price}'),
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        iconSize: 16,
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          removeProductListener(product);
+                        },
+                      ),
                       const SizedBox(
                         height: 8,
                       ),
-                      Text('x ${product.amount}'),
+                      Text(
+                          '數量 ${product.amount} x ${product.currency} ${product.price}'),
                       const SizedBox(
                         height: 8,
                       ),
-                      Text('${product.currency} ${product.totalPrice}'),
+                      Text(
+                          '總金額 ${product.currency} ${getTotalPrice(product.amount, product.price)}'),
                     ],
                   ),
                 ],
@@ -101,6 +118,19 @@ class CartProductWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getTotalPrice(int amount, String? price) {
+    if (price == null || price == '') {
+      return 0.toString();
+    }
+
+    int? priceInt = int.tryParse(price);
+    if (priceInt == null) {
+      return '0';
+    } else {
+      return (amount * priceInt).toString();
+    }
   }
 
   Color hexToColor(String hexString, {String alphaChannel = 'FF'}) {
