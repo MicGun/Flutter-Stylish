@@ -8,10 +8,12 @@ class ProductListWidget extends StatelessWidget {
     super.key,
     required this.products,
     required this.listTitle,
+    required this.onProductTap,
   });
 
   List<Product> products;
   String listTitle;
+  ValueSetter<Product> onProductTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class ProductListWidget extends StatelessWidget {
               for (Product product in products)
                 ProductWidget(
                   product: product,
+                  onProductTap: onProductTap,
                 )
             ],
           ),

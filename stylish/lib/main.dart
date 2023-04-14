@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:stylish/CartProduct.dart';
 import 'package:stylish/FakeRepo.dart';
 import 'package:stylish/ProductDetailsPage.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
+import 'package:stylish/ShoppingCartPage.dart';
 import 'package:stylish/product.dart';
 
 import 'ImageCardWeiget.dart';
@@ -17,18 +19,28 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final GoRouter _goRouter = GoRouter(
-    routes: [
-        GoRoute(
-        path: "/",
-        builder: (context, state) => const ProductsPage(),
-        ),
-        GoRoute(
-        path: "/productDetails",
-        builder: (context, state) => ProductDetailsPage(),
-        ),
-    ]
-    );
+  final GoRouter _goRouter = GoRouter(routes: [
+    GoRoute(
+      path: "/",
+      builder: (context, state) => const ProductsPage(),
+    ),
+    GoRoute(
+      path: "/productDetails",
+      builder: (context, state) => ProductDetailsPage(product: state.extra as Product,
+        // product: Product(
+        //     id: '2023001001',
+        //     productName: '超帥氣襯衫',
+        //     imageSrc: 'images/men_clothes.jpg',
+        //     price: '299',
+        //     currency: "NT\$",
+        //     variants: FakeRepo().getFakeVariants()),
+      ),
+    ),
+    GoRoute(
+      path: "/shoppingCart",
+      builder: (context, state) => ShoppingCartPage(),
+    ),
+  ]);
 
   // This widget is the root of your application.
   @override
@@ -58,9 +70,19 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   int selectedItem = -1;
-
+  List<CartProduct> cartProducts = [];
   void itemSelected(int selectedIndex) {
     selectedItem = selectedIndex;
+    notifyListeners();
+  }
+
+  void addProduct2Cart(CartProduct product) {
+    cartProducts.add(product);
+    notifyListeners();
+  }
+
+  void removeProductfromCart(CartProduct product) {
+    cartProducts.remove(product);
     notifyListeners();
   }
 }
@@ -83,7 +105,15 @@ class _ProductsPage extends State<ProductsPage> {
               'images/stylish_logo02.png',
               height: 24,
               fit: BoxFit.fitHeight,
-            )),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add_shopping_cart,  color: Colors.white,),
+                onPressed: () {
+                  GoRouter.of(context).go('/shoppingCart');
+                },
+              ),
+            ]),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -101,14 +131,23 @@ class _ProductsPage extends State<ProductsPage> {
                   ProductListWidget(
                     listTitle: '男裝',
                     products: repo.getMenProducts(),
+                    onProductTap: (product) {
+                      
+                    },
                   ),
                   ProductListWidget(
                     listTitle: '女裝',
                     products: repo.getWomenProducts(),
+                    onProductTap: (product) {
+                      
+                    },
                   ),
                   ProductListWidget(
                     listTitle: '配件',
                     products: repo.getAccessoryProducts(),
+                    onProductTap: (product) {
+                      
+                    },
                   ),
                 ],
               ),
@@ -116,13 +155,45 @@ class _ProductsPage extends State<ProductsPage> {
           ],
         )),
       );
-      var mobileLayout = Scaffold(
+      var mobileLayout = MobileCatalogScreen(
+        repo: repo,
+        onProductTap: (value) {
+          
+        },
+        );
+      return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
+    });
+  }
+}
+
+class MobileCatalogScreen extends StatelessWidget {
+    MobileCatalogScreen({
+    super.key,
+    required this.repo,
+    required this.onProductTap,
+  });
+
+  final FakeRepo repo;
+  ValueSetter<Product> onProductTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<MyAppState>(
+      builder: (context, value, child) => Scaffold(
         appBar: AppBar(
             title: Image.asset(
-          'images/stylish_logo02.png',
-          height: 24,
-          fit: BoxFit.fitHeight,
-        )),
+              'images/stylish_logo02.png',
+              height: 24,
+              fit: BoxFit.fitHeight,
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add_shopping_cart, color: Colors.white,),
+                onPressed: () {
+                  GoRouter.of(context).go('/shoppingCart');
+                },
+              ),
+            ]),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -136,19 +207,16 @@ class _ProductsPage extends State<ProductsPage> {
             ),
             Expanded(
               child: Row(children: [
-                // ProductListWidget(
-                //   listTitle: '男裝',
-                //   products: repo.getMenProducts(),
-                // ),
                 ProductListExpansionWidget(
-                    productCategories: repo.getAllCategoryProducts())
+                    productCategories: repo.getAllCategoryProducts(),
+                    onProductTap: onProductTap,
+                    ),
               ]),
             ),
           ],
         )),
-      );
-      return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
-    });
+      ),
+    );
   }
 }
 
