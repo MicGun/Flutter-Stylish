@@ -24,45 +24,47 @@ class ProductListExpansionWidget extends StatelessWidget {
               itemCount: productCategories.length,
               itemBuilder: (BuildContext context, int index) =>
                   ExpandableProductCategory(
-                      index: index,
-                      productCategory: productCategories[index],
-                      onProductTap: onProductTap,
-                      ))),
+                    index: index,
+                    productCategory: productCategories[index],
+                    onProductTap: onProductTap,
+                  ))),
     );
   }
 }
 
 class ExpandableProductCategory extends StatelessWidget {
   ExpandableProductCategory({
-    super.key, 
-    required this.productCategory, 
+    super.key,
+    required this.productCategory,
     required this.index,
     required this.onProductTap,
-    });
+  });
 
   int index;
   ProductCategory productCategory;
   ValueSetter<Product> onProductTap;
   @override
   Widget build(BuildContext context) {
-    return Consumer<MyAppState>(
-      builder: (context, value, child) => ExpansionTile(
-        key: GlobalKey(),
-        initiallyExpanded: value.selectedItem == index,
-        title: Center(child: Text(productCategory.category)),
-        children: productCategory.products
-            .map((productItem) => ListTile(
-                  title: ProductWidget(
-                    product: productItem,
-                    onProductTap: onProductTap,
-                    ),
-                  onTap: () {},
-                ))
-            .toList(),
-        onExpansionChanged: (isExpanded) {
-          value.itemSelected(isExpanded ? index : -1);
-        },
-      ),
-    );
+    return Text('Nothing Here');
+
+    // Consumer<MyAppState>(
+    //   builder: (context, value, child) => ExpansionTile(
+    //     key: GlobalKey(),
+    //     initiallyExpanded: value.selectedItem == index,
+    //     title: Center(child: Text(productCategory.category)),
+    //     children: productCategory.products
+    //         .map((productItem) => ListTile(
+    //               title: ProductWidget(
+    //                 product: productItem,
+    //                 onProductTap: onProductTap,
+    //                 ),
+    //               onTap: () {},
+    //             ))
+    //         .toList(),
+    //     onExpansionChanged: (isExpanded) {
+    //       value.itemSelected(isExpanded ? index : -1);
+    //     },
+    //   ),
+    // );
   }
 }

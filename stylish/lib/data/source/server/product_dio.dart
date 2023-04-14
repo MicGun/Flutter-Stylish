@@ -9,7 +9,7 @@ class ProductDio {
 
   ProductDio() {
     BaseOptions baseOptions = BaseOptions(
-      baseUrl: 'https://api.appworks-school.tw/api/',
+      baseUrl: 'https://api.appworks-school.tw/api/1.0/',
       receiveDataWhenStatusError: true,
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),

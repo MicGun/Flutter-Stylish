@@ -20,7 +20,7 @@ class ProcuctCubit extends Cubit<ProductState> {
       emit(ShowLoadingState());
     }
 
-    ApiResults apiResults = await ProductReposiroty().getAllProducts();
+    ApiResults apiResults = await ProductReposiroty().getWomenProducts();
 
     if (apiResults is ApiSuccess) {
       handelProductsResponse(apiResults.data);
