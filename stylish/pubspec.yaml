@@ -66,6 +66,8 @@ flutter:
     - images/women_clothes.jpg
     - images/accessories.jpg
     - images/stylish_logo02.png
+    - images/bag.jpg
+    - images/watch.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

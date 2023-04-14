@@ -100,7 +100,7 @@ class FakeRepo {
             imageSrc: 'images/accessories.jpg',
             price: '199',
             currency: "NT\$",
-            variants: getFakeAccessorVariants()),
+            variants: getFakeVariants()),
         Product(
             id: '2023001001',
             productName: '必備率性皮帶',
