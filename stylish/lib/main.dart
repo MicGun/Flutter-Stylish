@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +9,9 @@ import 'package:stylish/ProductDetailsPage.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/ShoppingCartPage.dart';
 import 'package:stylish/cubit/product_cubit/product_state.dart';
+import 'package:stylish/domain/category_domain.dart';
 import 'package:stylish/product.dart';
+import 'package:stylish/widgets/default_loading_indicator.dart';
 
 import 'ImageCardWeiget.dart';
 import 'ProductListWeiget.dart';
@@ -170,27 +173,27 @@ class _ProductsPage extends State<ProductsPage> {
                   ],
                 ),
               ),
-              Expanded(
-                child: Row(
-                  children: [
-                    ProductListWidget(
-                      listTitle: '男裝',
-                      // products: repo.getMenProducts(),
-                      onProductTap: (product) {},
-                    ),
-                    ProductListWidget(
-                      listTitle: '女裝',
-                      // products: repo.getWomenProducts(),
-                      onProductTap: (product) {},
-                    ),
-                    ProductListWidget(
-                      listTitle: '配件',
-                      // products: repo.getAccessoryProducts(),
-                      onProductTap: (product) {},
-                    ),
-                  ],
-                ),
-              ),
+              Expanded(child: getWebProductListWidget(state)
+                  // Row(
+                  //   children: [
+                  //     ProductListWidget(
+                  //       listTitle: '男裝',
+                  //       // products: repo.getMenProducts(),
+                  //       onProductTap: (product) {},
+                  //     ),
+                  //     ProductListWidget(
+                  //       listTitle: '女裝',
+                  //       // products: repo.getWomenProducts(),
+                  //       onProductTap: (product) {},
+                  //     ),
+                  //     ProductListWidget(
+                  //       listTitle: '配件',
+                  //       // products: repo.getAccessoryProducts(),
+                  //       onProductTap: (product) {},
+                  //     ),
+                  //   ],
+                  // ),
+                  ),
             ],
           ));
         }),
@@ -201,6 +204,52 @@ class _ProductsPage extends State<ProductsPage> {
       );
       return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
+  }
+}
+
+Widget getWebProductListWidget(ProductState state) {
+  if (kDebugMode) {
+    print(state);
+  }
+  if (state is GetProductsFailureState) {
+    return const Text('Failed to get products');
+  } else if (state is GetProductsLoadingState) {
+    return const DefaultLoadingIndicator(
+      color: Colors.grey,
+    );
+  } else if (state is ShowLoadingState) {
+    return const DefaultLoadingIndicator(
+      color: Colors.grey,
+    );
+  } else if (state is GetProductsSuccessState) {
+    var categoryTypes = ProductCategoryType.values;
+    return Row(
+      children: List.generate(categoryTypes.length, (index) => ProductListWidget(
+          listTitle: categoryTypes[index].getProductCategoryTypeName(),
+          categoryType: categoryTypes[index],
+          // products: repo.getMenProducts(),
+          onProductTap: (product) {},
+        ),)
+      // [
+      //   ProductListWidget(
+      //     listTitle: '男裝',
+      //     // products: repo.getMenProducts(),
+      //     onProductTap: (product) {},
+      //   ),
+      //   ProductListWidget(
+      //     listTitle: '女裝',
+      //     // products: repo.getWomenProducts(),
+      //     onProductTap: (product) {},
+      //   ),
+      //   ProductListWidget(
+      //     listTitle: '配件',
+      //     // products: repo.getAccessoryProducts(),
+      //     onProductTap: (product) {},
+      //   ),
+      // ],
+    );
+  } else {
+    return const Text('Failed to get products');
   }
 }
 
