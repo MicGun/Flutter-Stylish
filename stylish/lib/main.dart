@@ -2,21 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:stylish/CartProduct.dart';
 import 'package:stylish/FakeRepo.dart';
-import 'package:stylish/ProductDetailsPage.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/ShoppingCartPage.dart';
 import 'package:stylish/cubit/product_cubit/product_state.dart';
 import 'package:stylish/domain/category_domain.dart';
+import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
 import 'package:stylish/widgets/default_loading_indicator.dart';
 
 import 'ImageCardWeiget.dart';
+import 'ProductDetailsPage copy.dart';
 import 'ProductListWeiget.dart';
-import 'ProductWidget.dart';
 import 'cubit/product_cubit/product_cubit.dart';
+import 'package:flutter/painting.dart' as libColor;
 
 void main() {
   runApp(MyApp());
@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
     ),
     GoRoute(
       path: "/productDetails",
-      builder: (context, state) => ProductDetailsPage(
-        product: state.extra as Product,
+      builder: (context, state) => ProductDetailsPage2(
+        product: state.extra as Datum,
         // product: Product(
         //     id: '2023001001',
         //     productName: '超帥氣襯衫',
@@ -141,7 +141,7 @@ class _ProductsPage extends State<ProductsPage> {
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
-            backgroundColor: const Color(0xF1F4F8),
+            backgroundColor: libColor.Color(0xF1F4F8),
             title: Image.asset(
               'images/stylish_logo02.png',
               height: 24,
@@ -257,6 +257,7 @@ class _MobileCatalogScreenState extends State<MobileCatalogScreen> {
     var categoryTypes = ProductCategoryType.values;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: libColor.Color(0xF1F4F8),
           title: Image.asset(
             'images/stylish_logo02.png',
             height: 24,
