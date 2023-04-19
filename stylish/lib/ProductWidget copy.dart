@@ -34,6 +34,7 @@ class ProductWidget extends StatelessWidget {
                 '${product.mainImage}',
                 height: 100,
                 width: 80,
+                fit: BoxFit.cover,
               ),
 
               // Image(
