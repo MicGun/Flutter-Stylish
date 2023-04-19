@@ -230,23 +230,6 @@ Widget getWebProductListWidget(ProductState state) {
           // products: repo.getMenProducts(),
           onProductTap: (product) {},
         ),)
-      // [
-      //   ProductListWidget(
-      //     listTitle: '男裝',
-      //     // products: repo.getMenProducts(),
-      //     onProductTap: (product) {},
-      //   ),
-      //   ProductListWidget(
-      //     listTitle: '女裝',
-      //     // products: repo.getWomenProducts(),
-      //     onProductTap: (product) {},
-      //   ),
-      //   ProductListWidget(
-      //     listTitle: '配件',
-      //     // products: repo.getAccessoryProducts(),
-      //     onProductTap: (product) {},
-      //   ),
-      // ],
     );
   } else {
     return const Text('Failed to get products');
@@ -271,6 +254,7 @@ class MobileCatalogScreen extends StatefulWidget {
 class _MobileCatalogScreenState extends State<MobileCatalogScreen> {
   @override
   Widget build(BuildContext context) {
+    var categoryTypes = ProductCategoryType.values;
     return Scaffold(
       appBar: AppBar(
           title: Image.asset(
@@ -303,10 +287,11 @@ class _MobileCatalogScreenState extends State<MobileCatalogScreen> {
           Expanded(
             child: Row(children: [
               ProductListExpansionWidget(
-                productCategories: widget.repo.getAllCategoryProducts(),
+                categoryTypes: categoryTypes,
                 onProductTap: widget.onProductTap,
               ),
-            ]),
+            ]
+            ),
           ),
         ],
       )),
