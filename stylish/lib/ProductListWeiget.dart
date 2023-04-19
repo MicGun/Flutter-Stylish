@@ -9,7 +9,6 @@ import 'package:stylish/product.dart';
 import 'package:stylish/widgets/default_loading_indicator.dart';
 
 import 'ProductWidget copy.dart';
-import 'ProductWidget.dart';
 import 'cubit/product_cubit/product_cubit.dart';
 
 class ProductListWidget extends StatefulWidget {
@@ -61,7 +60,7 @@ class _ProductListWidgetState extends State<ProductListWidget> {
                       ? ListView(
                           children: [
                             for (Datum product in value.data!)
-                              ProductWidget2(
+                              ProductWidget(
                                 product: product,
                                 onProductTap: widget.onProductTap,
                               )

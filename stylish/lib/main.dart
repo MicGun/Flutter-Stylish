@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     ),
     GoRoute(
       path: "/productDetails",
-      builder: (context, state) => ProductDetailsPage2(
+      builder: (context, state) => ProductDetailsPage(
         product: state.extra as Datum,
         // product: Product(
         //     id: '2023001001',
@@ -224,13 +224,15 @@ Widget getWebProductListWidget(ProductState state) {
   } else if (state is GetProductsSuccessState) {
     var categoryTypes = ProductCategoryType.values;
     return Row(
-      children: List.generate(categoryTypes.length, (index) => ProductListWidget(
-          listTitle: categoryTypes[index].getProductCategoryTypeName(),
-          categoryType: categoryTypes[index],
-          // products: repo.getMenProducts(),
-          onProductTap: (product) {},
-        ),)
-    );
+        children: List.generate(
+      categoryTypes.length,
+      (index) => ProductListWidget(
+        listTitle: categoryTypes[index].getProductCategoryTypeName(),
+        categoryType: categoryTypes[index],
+        // products: repo.getMenProducts(),
+        onProductTap: (product) {},
+      ),
+    ));
   } else {
     return const Text('Failed to get products');
   }
@@ -257,7 +259,7 @@ class _MobileCatalogScreenState extends State<MobileCatalogScreen> {
     var categoryTypes = ProductCategoryType.values;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: libColor.Color(0xF1F4F8),
+          backgroundColor: libColor.Color(0xF1F4F8),
           title: Image.asset(
             'images/stylish_logo02.png',
             height: 24,
@@ -291,8 +293,7 @@ class _MobileCatalogScreenState extends State<MobileCatalogScreen> {
                 categoryTypes: categoryTypes,
                 onProductTap: widget.onProductTap,
               ),
-            ]
-            ),
+            ]),
           ),
         ],
       )),

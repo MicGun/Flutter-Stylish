@@ -8,7 +8,6 @@ import 'package:stylish/productCategory.dart';
 import 'package:stylish/widgets/default_loading_indicator.dart';
 
 import 'ProductWidget copy.dart';
-import 'ProductWidget.dart';
 import 'cubit/product_cubit/product_cubit.dart';
 import 'cubit/product_cubit/product_state.dart';
 import 'domain/category_domain.dart';
@@ -46,42 +45,42 @@ class _ProductListExpansionWidgetState
       print(widget.categoryTypes.length);
     }
     return Expanded(
-        child: BlocBuilder<ProcuctCubit, ProductState>(
-      builder: (context, state) => Container(
-          child: getMobileProductListWidget(state, widget.onProductTap)
-          // (value.data == null)
-          //     ? const Center(
-          //         child: DefaultLoadingIndicator(color: Colors.grey),
-          //       )
-          //     : ListView(
-          //         children: List.generate(
-          //             widget.categoryTypes.length,
-          //             (index) => ExpandableProductCategory2(
-          //                   index: index,
-          //                   categoryType: widget.categoryTypes[index],
-          //                   onProductTap: widget.onProductTap,
-          //                 )),
-                  // [
-                  //   ExpandableProductCategory2(
-                  //     title: '男裝',
-                  //     products: value,
-                  //     onProductTap: widget.onProductTap,
-                  //     index: 0,
-                  //   ),
-                  //   ExpandableProductCategory2(
-                  //     title: '女裝',
-                  //     products: value,
-                  //     onProductTap: widget.onProductTap,
-                  //     index: 0,
-                  //   ),
-                  //   ExpandableProductCategory2(
-                  //     title: '配件',
-                  //     products: value,
-                  //     onProductTap: widget.onProductTap,
-                  //     index: 0,
-                  //   )
-                  // ],
-                )
+      child: BlocBuilder<ProcuctCubit, ProductState>(
+          builder: (context, state) => Container(
+              child: getMobileProductListWidget(state, widget.onProductTap)
+              // (value.data == null)
+              //     ? const Center(
+              //         child: DefaultLoadingIndicator(color: Colors.grey),
+              //       )
+              //     : ListView(
+              //         children: List.generate(
+              //             widget.categoryTypes.length,
+              //             (index) => ExpandableProductCategory2(
+              //                   index: index,
+              //                   categoryType: widget.categoryTypes[index],
+              //                   onProductTap: widget.onProductTap,
+              //                 )),
+              // [
+              //   ExpandableProductCategory2(
+              //     title: '男裝',
+              //     products: value,
+              //     onProductTap: widget.onProductTap,
+              //     index: 0,
+              //   ),
+              //   ExpandableProductCategory2(
+              //     title: '女裝',
+              //     products: value,
+              //     onProductTap: widget.onProductTap,
+              //     index: 0,
+              //   ),
+              //   ExpandableProductCategory2(
+              //     title: '配件',
+              //     products: value,
+              //     onProductTap: widget.onProductTap,
+              //     index: 0,
+              //   )
+              // ],
+              )
           // ListView.builder(
           //     itemCount: productCategories.length,
           //     itemBuilder: (BuildContext context, int index) =>
@@ -96,48 +95,48 @@ class _ProductListExpansionWidgetState
   }
 }
 
-class ExpandableProductCategory extends StatelessWidget {
+// class ExpandableProductCategory extends StatelessWidget {
+//   ExpandableProductCategory({
+//     super.key,
+//     required this.productCategory,
+//     required this.index,
+//     required this.onProductTap,
+//   });
+
+//   int index;
+//   ProductCategory productCategory;
+//   ValueSetter<Product> onProductTap;
+//   @override
+//   Widget build(BuildContext context) {
+//     return
+//         // BlocBuilder<ProcuctCubit, ProductState>(builder: (context, state) {
+//         //   return Text('Nothing Here');
+//         // });
+
+//         Consumer<MyAppState>(
+//       builder: (context, value, child) => ExpansionTile(
+//         key: GlobalKey(),
+//         initiallyExpanded: value.selectedItem == index,
+//         title: Center(child: Text(productCategory.category)),
+//         children: productCategory.products
+//             .map((productItem) => ListTile(
+//                   title: ProductWidget(
+//                     product: productItem,
+//                     onProductTap: onProductTap,
+//                   ),
+//                   onTap: () {},
+//                 ))
+//             .toList(),
+//         onExpansionChanged: (isExpanded) {
+//           value.itemSelected(isExpanded ? index : -1);
+//         },
+//       ),
+//     );
+//   }
+// }
+
+class ExpandableProductCategory extends StatefulWidget {
   ExpandableProductCategory({
-    super.key,
-    required this.productCategory,
-    required this.index,
-    required this.onProductTap,
-  });
-
-  int index;
-  ProductCategory productCategory;
-  ValueSetter<Product> onProductTap;
-  @override
-  Widget build(BuildContext context) {
-    return
-        // BlocBuilder<ProcuctCubit, ProductState>(builder: (context, state) {
-        //   return Text('Nothing Here');
-        // });
-
-        Consumer<MyAppState>(
-      builder: (context, value, child) => ExpansionTile(
-        key: GlobalKey(),
-        initiallyExpanded: value.selectedItem == index,
-        title: Center(child: Text(productCategory.category)),
-        children: productCategory.products
-            .map((productItem) => ListTile(
-                  title: ProductWidget(
-                    product: productItem,
-                    onProductTap: onProductTap,
-                  ),
-                  onTap: () {},
-                ))
-            .toList(),
-        onExpansionChanged: (isExpanded) {
-          value.itemSelected(isExpanded ? index : -1);
-        },
-      ),
-    );
-  }
-}
-
-class ExpandableProductCategory2 extends StatefulWidget {
-  ExpandableProductCategory2({
     super.key,
     required this.categoryType,
     // required this.title,
@@ -150,12 +149,11 @@ class ExpandableProductCategory2 extends StatefulWidget {
   ValueSetter<Product> onProductTap;
 
   @override
-  State<ExpandableProductCategory2> createState() =>
-      _ExpandableProductCategory2State();
+  State<ExpandableProductCategory> createState() =>
+      _ExpandableProductCategoryState();
 }
 
-class _ExpandableProductCategory2State
-    extends State<ExpandableProductCategory2> {
+class _ExpandableProductCategoryState extends State<ExpandableProductCategory> {
   @override
   void initState() {
     super.initState();
@@ -183,7 +181,7 @@ class _ExpandableProductCategory2State
         children: (value != null && value.data != null)
             ? value.data!
                 .map((productItem) => ListTile(
-                      title: ProductWidget2(
+                      title: ProductWidget(
                         product: productItem,
                         onProductTap: widget.onProductTap,
                       ),
@@ -220,7 +218,7 @@ Widget getMobileProductListWidget(ProductState state, onProductTap) {
     return ListView(
         children: List.generate(
             categoryTypes.length,
-            (index) => ExpandableProductCategory2(
+            (index) => ExpandableProductCategory(
                   index: index,
                   categoryType: categoryTypes[index],
                   onProductTap: onProductTap,

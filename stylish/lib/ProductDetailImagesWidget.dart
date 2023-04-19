@@ -5,13 +5,10 @@ import 'package:stylish/models/products_model.dart';
 import 'package:flutter/painting.dart' as libColor;
 
 class ProductDetailImagesWidget extends StatelessWidget {
-  
-  ProductDetailImagesWidget({
-    super.key,
-    required this.product});
+  ProductDetailImagesWidget({super.key, required this.product});
 
   Datum product;
-  
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -48,47 +45,18 @@ class ProductDetailImagesWidget extends StatelessWidget {
             children: [
               Expanded(
                   child: Column(
-                children: List.generate(
-                  product.images!.length, (index) => Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Image.network(
-                      product.images![index],
-                      fit: BoxFit.cover,
-                      height: 500,
-                      width: 360,
-                    ),
-                  ),)
-                // [
-                //   Padding(
-                //     padding: const EdgeInsets.only(top: 16),
-                //     child: Image(
-                //       image: AssetImage('images/men_clothes.jpg'),
-                //       fit: BoxFit.fill,
-                //     ),
-                //   ),
-                //   Padding(
-                //     padding: const EdgeInsets.only(top: 16),
-                //     child: Image(
-                //       image: AssetImage('images/men_clothes.jpg'),
-                //       fit: BoxFit.fill,
-                //     ),
-                //   ),
-                //   Padding(
-                //     padding: const EdgeInsets.only(top: 16),
-                //     child: Image(
-                //       image: AssetImage('images/men_clothes.jpg'),
-                //       fit: BoxFit.fill,
-                //     ),
-                //   ),
-                //   Padding(
-                //     padding: const EdgeInsets.only(top: 16),
-                //     child: Image(
-                //       image: AssetImage('images/men_clothes.jpg'),
-                //       fit: BoxFit.fill,
-                //     ),
-                //   ),
-                // ],
-              )),
+                      children: List.generate(
+                product.images!.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Image.network(
+                    product.images![index],
+                    fit: BoxFit.cover,
+                    height: 500,
+                    width: 360,
+                  ),
+                ),
+              ))),
             ],
           ),
         ],

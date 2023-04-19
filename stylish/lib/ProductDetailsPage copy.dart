@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stylish/ImageCardWeiget.dart';
-import 'package:stylish/ProductVariaantsWidget.dart';
+import 'package:stylish/ProductVariaantsWidget copy.dart';
 import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
 
@@ -10,18 +10,17 @@ import 'ProductVariaantsWidget copy.dart';
 import 'main.dart';
 import 'package:flutter/painting.dart' as libColor;
 
-class ProductDetailsPage2 extends StatefulWidget {
-  ProductDetailsPage2({
+class ProductDetailsPage extends StatefulWidget {
+  ProductDetailsPage({
     super.key,
     required this.product,
   });
   Datum product;
   @override
-  State<StatefulWidget> createState() => _ProductDetailsPage2();
+  State<StatefulWidget> createState() => _ProductDetailsPage();
 }
 
-class _ProductDetailsPage2 extends State<ProductDetailsPage2> {
-  
+class _ProductDetailsPage extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
     Datum product = widget.product;
@@ -55,12 +54,16 @@ class _ProductDetailsPage2 extends State<ProductDetailsPage2> {
                       width: 360,
                     ),
                   ),
-                  ProductVariantsWidget2(product: product,),
+                  ProductVariantsWidget2(
+                    product: product,
+                  ),
                 ],
               ),
               Column(
                 children: [
-                  ProductDetailImagesWidget(product: product,),
+                  ProductDetailImagesWidget(
+                    product: product,
+                  ),
                 ],
               ),
             ],
@@ -84,16 +87,20 @@ class _ProductDetailsPage2 extends State<ProductDetailsPage2> {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Image.network(
-                      '${product.mainImage}',
-                      fit: BoxFit.fill,
-                      height: 500,
-                      width: 360,
-                    ),
+                '${product.mainImage}',
+                fit: BoxFit.fill,
+                height: 500,
+                width: 360,
+              ),
             ),
-            ProductVariantsWidget2(product: product,),
+            ProductVariantsWidget2(
+              product: product,
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ProductDetailImagesWidget(product: product,),
+              child: ProductDetailImagesWidget(
+                product: product,
+              ),
             ),
           ],
         )),

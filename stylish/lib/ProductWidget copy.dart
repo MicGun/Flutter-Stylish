@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
 
-class ProductWidget2 extends StatelessWidget {
-  ProductWidget2({
-    super.key, 
+class ProductWidget extends StatelessWidget {
+  ProductWidget({
+    super.key,
     required this.product,
     required this.onProductTap,
-    });
+  });
 
   Datum product;
   ValueSetter<Product> onProductTap;
@@ -22,7 +22,7 @@ class ProductWidget2 extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
-        onTap:() => GoRouter.of(context).go('/productDetails', extra: product),
+        onTap: () => GoRouter.of(context).go('/productDetails', extra: product),
         child: Row(
           children: [
             ClipRRect(
@@ -30,8 +30,12 @@ class ProductWidget2 extends StatelessWidget {
                 topLeft: Radius.circular(8.0),
                 bottomLeft: Radius.circular(8.0),
               ),
-              child: Image.network('${product.mainImage}', height: 100, width: 80,),
-              
+              child: Image.network(
+                '${product.mainImage}',
+                height: 100,
+                width: 80,
+              ),
+
               // Image(
               //   image: AssetImage(product.imageSrc),
               //   fit: BoxFit.fill,
