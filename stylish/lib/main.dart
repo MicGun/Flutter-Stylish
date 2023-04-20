@@ -1,16 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:stylish/CartProduct.dart';
 import 'package:stylish/FakeRepo.dart';
-import 'package:stylish/ProductDetailsPage.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/ShoppingCartPage.dart';
+import 'package:stylish/cubit/product_cubit/product_state.dart';
+import 'package:stylish/domain/category_domain.dart';
+import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
+import 'package:stylish/widgets/default_loading_indicator.dart';
 
 import 'ImageCardWeiget.dart';
+import 'ProductDetailsPage copy.dart';
 import 'ProductListWeiget.dart';
-import 'ProductWidget.dart';
+import 'cubit/product_cubit/product_cubit.dart';
+import 'package:flutter/painting.dart' as libColor;
 
 void main() {
   runApp(MyApp());
@@ -26,7 +32,8 @@ class MyApp extends StatelessWidget {
     ),
     GoRoute(
       path: "/productDetails",
-      builder: (context, state) => ProductDetailsPage(product: state.extra as Product,
+      builder: (context, state) => ProductDetailsPage(
+        product: state.extra as Datum,
         // product: Product(
         //     id: '2023001001',
         //     productName: '超帥氣襯衫',
@@ -42,11 +49,35 @@ class MyApp extends StatelessWidget {
     ),
   ]);
 
-  // This widget is the root of your application.
+  // // This widget is the root of your application.
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ChangeNotifierProvider(
+  //     create: (context) => MyAppState(),
+  //     child: MaterialApp.router(
+  //       routerConfig: _goRouter,
+  //       title: 'Flutter Demo',
+  //       theme: ThemeData(
+  //         // This is the theme of your application.
+  //         //
+  //         // Try running your application with "flutter run". You'll see the
+  //         // application has a blue toolbar. Then, without quitting the app, try
+  //         // changing the primarySwatch below to Colors.green and then invoke
+  //         // "hot reload" (press "r" in the console where you ran "flutter run",
+  //         // or simply save your changes to "hot reload" in a Flutter IDE).
+  //         // Notice that the counter didn't reset back to zero; the application
+  //         // is not restarted.
+  //         primarySwatch: Colors.grey,
+  //       ),
+  //       // home: ProductDetailsPage(),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+    return BlocProvider(
+      create: (context) => ProcuctCubit(),
       child: MaterialApp.router(
         routerConfig: _goRouter,
         title: 'Flutter Demo',
@@ -95,12 +126,22 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPage extends State<ProductsPage> {
   FakeRepo repo = FakeRepo();
+  late ProcuctCubit procuctCubit;
+
+  @override
+  void initState() {
+    // procuctCubit = ProcuctCubit();
+    // procuctCubit.getAllProducts(0);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    context.read<ProcuctCubit>().getAllProducts(0);
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
-            backgroundColor: const Color(0xF1F4F8),
+            backgroundColor: libColor.Color(0xF1F4F8),
             title: Image.asset(
               'images/stylish_logo02.png',
               height: 24,
@@ -108,66 +149,97 @@ class _ProductsPage extends State<ProductsPage> {
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.add_shopping_cart,  color: Colors.white,),
+                icon: Icon(
+                  Icons.add_shopping_cart,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   GoRouter.of(context).go('/shoppingCart');
                 },
               ),
             ]),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 170,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
+        body:
+            BlocBuilder<ProcuctCubit, ProductState>(builder: (context, state) {
+          return Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 170,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    for (var i = 0; i < 5; i++) const ImageCardWeiget()
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  ProductListWidget(
-                    listTitle: '男裝',
-                    products: repo.getMenProducts(),
-                    onProductTap: (product) {
-                      
-                    },
+              Expanded(child: getWebProductListWidget(state)
+                  // Row(
+                  //   children: [
+                  //     ProductListWidget(
+                  //       listTitle: '男裝',
+                  //       // products: repo.getMenProducts(),
+                  //       onProductTap: (product) {},
+                  //     ),
+                  //     ProductListWidget(
+                  //       listTitle: '女裝',
+                  //       // products: repo.getWomenProducts(),
+                  //       onProductTap: (product) {},
+                  //     ),
+                  //     ProductListWidget(
+                  //       listTitle: '配件',
+                  //       // products: repo.getAccessoryProducts(),
+                  //       onProductTap: (product) {},
+                  //     ),
+                  //   ],
+                  // ),
                   ),
-                  ProductListWidget(
-                    listTitle: '女裝',
-                    products: repo.getWomenProducts(),
-                    onProductTap: (product) {
-                      
-                    },
-                  ),
-                  ProductListWidget(
-                    listTitle: '配件',
-                    products: repo.getAccessoryProducts(),
-                    onProductTap: (product) {
-                      
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        )),
+            ],
+          ));
+        }),
       );
       var mobileLayout = MobileCatalogScreen(
         repo: repo,
-        onProductTap: (value) {
-          
-        },
-        );
+        onProductTap: (value) {},
+      );
       return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
     });
   }
 }
 
-class MobileCatalogScreen extends StatelessWidget {
-    MobileCatalogScreen({
+Widget getWebProductListWidget(ProductState state) {
+  if (kDebugMode) {
+    print(state);
+  }
+  if (state is GetProductsFailureState) {
+    return const Text('Failed to get products');
+  } else if (state is GetProductsLoadingState) {
+    return const DefaultLoadingIndicator(
+      color: Colors.grey,
+    );
+  } else if (state is ShowLoadingState) {
+    return const DefaultLoadingIndicator(
+      color: Colors.grey,
+    );
+  } else if (state is GetProductsSuccessState) {
+    var categoryTypes = ProductCategoryType.values;
+    return Row(
+        children: List.generate(
+      categoryTypes.length,
+      (index) => ProductListWidget(
+        listTitle: categoryTypes[index].getProductCategoryTypeName(),
+        categoryType: categoryTypes[index],
+        // products: repo.getMenProducts(),
+        onProductTap: (product) {},
+      ),
+    ));
+  } else {
+    return const Text('Failed to get products');
+  }
+}
+
+class MobileCatalogScreen extends StatefulWidget {
+  MobileCatalogScreen({
     super.key,
     required this.repo,
     required this.onProductTap,
@@ -175,48 +247,100 @@ class MobileCatalogScreen extends StatelessWidget {
 
   final FakeRepo repo;
   ValueSetter<Product> onProductTap;
+  int expandedIndex = -1;
 
   @override
+  State<MobileCatalogScreen> createState() => _MobileCatalogScreenState();
+}
+
+class _MobileCatalogScreenState extends State<MobileCatalogScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Consumer<MyAppState>(
-      builder: (context, value, child) => Scaffold(
-        appBar: AppBar(
-            title: Image.asset(
-              'images/stylish_logo02.png',
-              height: 24,
-              fit: BoxFit.fitHeight,
+    var categoryTypes = ProductCategoryType.values;
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: libColor.Color(0xF1F4F8),
+          title: Image.asset(
+            'images/stylish_logo02.png',
+            height: 24,
+            fit: BoxFit.fitHeight,
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.add_shopping_cart,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                GoRouter.of(context).go('/shoppingCart');
+              },
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.add_shopping_cart, color: Colors.white,),
-                onPressed: () {
-                  GoRouter.of(context).go('/shoppingCart');
-                },
+          ]),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 170,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
+            ),
+          ),
+          Expanded(
+            child: Row(children: [
+              ProductListExpansionWidget(
+                categoryTypes: categoryTypes,
+                onProductTap: widget.onProductTap,
               ),
             ]),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 170,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
-              ),
-            ),
-            Expanded(
-              child: Row(children: [
-                ProductListExpansionWidget(
-                    productCategories: repo.getAllCategoryProducts(),
-                    onProductTap: onProductTap,
-                    ),
-              ]),
-            ),
-          ],
-        )),
-      ),
+          ),
+        ],
+      )),
     );
+
+    // Consumer<MyAppState>(
+    //   builder: (context, value, child) => Scaffold(
+    //     appBar: AppBar(
+    //         title: Image.asset(
+    //           'images/stylish_logo02.png',
+    //           height: 24,
+    //           fit: BoxFit.fitHeight,
+    //         ),
+    //         actions: <Widget>[
+    //           IconButton(
+    //             icon: Icon(
+    //               Icons.add_shopping_cart,
+    //               color: Colors.white,
+    //             ),
+    //             onPressed: () {
+    //               GoRouter.of(context).go('/shoppingCart');
+    //             },
+    //           ),
+    //         ]),
+    //     body: Center(
+    //         child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         SizedBox(
+    //           height: 170,
+    //           child: ListView(
+    //             scrollDirection: Axis.horizontal,
+    //             children: [for (var i = 0; i < 5; i++) const ImageCardWeiget()],
+    //           ),
+    //         ),
+    //         Expanded(
+    //           child: Row(children: [
+    //             ProductListExpansionWidget(
+    //               productCategories: repo.getAllCategoryProducts(),
+    //               onProductTap: onProductTap,
+    //             ),
+    //           ]),
+    //         ),
+    //       ],
+    //     )),
+    //   ),
+    // );
   }
 }
 

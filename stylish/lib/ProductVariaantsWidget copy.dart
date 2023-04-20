@@ -5,20 +5,22 @@ import 'package:stylish/CartProduct.dart';
 import 'package:stylish/ProductVariant.dart';
 import 'package:stylish/ProductVariantIemWithOptionsWidget.dart';
 import 'package:stylish/main.dart';
+import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
+import 'package:flutter/painting.dart' as libColor;
 
-class ProductVariantsWidget extends StatefulWidget {
-  ProductVariantsWidget({
+class ProductVariantsWidget2 extends StatefulWidget {
+  ProductVariantsWidget2({
     super.key,
     required this.product,
   });
   // List<ProductVariant> variants;
-  Product product;
+  Datum product;
   @override
-  State<ProductVariantsWidget> createState() => _ProductVariantsWidgetState();
+  State<ProductVariantsWidget2> createState() => _ProductVariantsWidgetState2();
 }
 
-class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
+class _ProductVariantsWidgetState2 extends State<ProductVariantsWidget2> {
   String? sizeValue = '';
   String? selectedColorCode = '';
   int? count = 1;
@@ -51,9 +53,9 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Product product = widget.product;
-    String price = product.price;
-    String currency = product.currency;
+    Datum product = widget.product;
+    int? price = product.price;
+    String currency = 'NTD';
 
     bool enableAdd2Cart = count != null &&
         count! >= 1 &&
@@ -62,8 +64,7 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
         sizeValue != null &&
         sizeValue != '';
 
-    return Consumer<MyAppState>(
-      builder: (context, value, child) => SizedBox(
+    return SizedBox(
         height: 500,
         width: 360,
         child: Padding(
@@ -72,11 +73,11 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.product.productName,
+                product.title!,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                widget.product.id,
+                '${product.id}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               SizedBox(
@@ -159,8 +160,8 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: enableAdd2Cart
-                              ? const Color(0xff3f3a3a)
-                              : const Color(0xffe6e6e6),
+                              ? const libColor.Color(0xff3f3a3a)
+                              : const libColor.Color(0xffe6e6e6),
                           minimumSize: const Size(320, 60),
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
@@ -169,26 +170,26 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                           ),
                         ),
                         onPressed: () {
-                          if (enableAdd2Cart) {
-                            CartProduct cartProduct = CartProduct(
-                                id: widget.product.id,
-                                imageSrc: widget.product.imageSrc,
-                                productName: widget.product.productName,
-                                currency: currency,
-                                price: price,
-                                totalPrice: getTotalPrice(count, price),
-                                colorName: '',
-                                colorCode: selectedColorCode!,
-                                size: sizeValue!,
-                                amount: count!);
-                            value.addProduct2Cart(cartProduct);
-                            setState(() {
-                              count = 1;
-                              selectedColorCode = '';
-                              sizeValue = '';
-                            });
-                            _controller.text = 1.toString();
-                          }
+                          // if (enableAdd2Cart) {
+                          //   CartProduct cartProduct = CartProduct(
+                          //       id: widget.product.id,
+                          //       imageSrc: widget.product.imageSrc,
+                          //       productName: widget.product.productName,
+                          //       currency: currency,
+                          //       price: price,
+                          //       totalPrice: getTotalPrice(count, price),
+                          //       colorName: '',
+                          //       colorCode: selectedColorCode!,
+                          //       size: sizeValue!,
+                          //       amount: count!);
+                          //   value.addProduct2Cart(cartProduct);
+                          //   setState(() {
+                          //     count = 1;
+                          //     selectedColorCode = '';
+                          //     sizeValue = '';
+                          //   });
+                          //   _controller.text = 1.toString();
+                          // }
                         },
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
@@ -196,8 +197,8 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
                             '加入購物車',
                             style: TextStyle(
                               color: enableAdd2Cart
-                                  ? Color(0xffffffff)
-                                  : Color(0xff575a69),
+                                  ? libColor.Color(0xffffffff)
+                                  : libColor.Color(0xff575a69),
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -211,8 +212,7 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   String getTotalPrice(int? amount, String? price) {
@@ -228,16 +228,16 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
     }
   }
 
-  List<Widget> getColorOptionWidgets(Product product) {
+  List<Widget> getColorOptionWidgets(Datum product) {
     List<String> colorCodes = [];
     List<Widget> colors = [];
-    for (ProductVariant productVariant in product.variants) {
-      String colorCode = productVariant.colorCode;
+    for (Variant productVariant in product.variants!) {
+      String colorCode = productVariant.colorCode!;
       if (!colorCodes.contains(colorCode)) {
         colorCodes.add(colorCode);
         colors.add(ChoiceChip(
           label: Card(
-            color: hexToColor(productVariant.colorCode),
+            color: hexToColor(productVariant.colorCode!),
             child: const SizedBox(
               width: 20,
               height: 20,
@@ -257,11 +257,11 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
     return colors;
   }
 
-  List<Widget> getSizeOptionWidgets(Product product) {
+  List<Widget> getSizeOptionWidgets(Datum product) {
     List<String> allSize = [];
     List<Widget> sizeWidgetList = [];
-    for (ProductVariant productVariant in product.variants) {
-      String size = productVariant.size;
+    for (Variant productVariant in product.variants!) {
+      String size = productVariant.size!;
       if (!allSize.contains(size)) {
         allSize.add(size);
         sizeWidgetList.add(ChoiceChip(
@@ -278,8 +278,8 @@ class _ProductVariantsWidgetState extends State<ProductVariantsWidget> {
     return sizeWidgetList;
   }
 
-  Color hexToColor(String hexString, {String alphaChannel = 'FF'}) {
-    return Color(int.parse(hexString.replaceFirst('#', '0x$alphaChannel')));
+  libColor.Color hexToColor(String hexString, {String alphaChannel = 'FF'}) {
+    return libColor.Color(int.parse(hexString.replaceFirst('', '0x$alphaChannel')));
   }
 
   @override

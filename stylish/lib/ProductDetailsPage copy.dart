@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stylish/ImageCardWeiget.dart';
-import 'package:stylish/ProductVariaantsWidget.dart';
+import 'package:stylish/ProductVariaantsWidget copy.dart';
+import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
 
 import 'ProductDetailImagesWidget.dart';
+import 'ProductVariaantsWidget copy.dart';
 import 'main.dart';
+import 'package:flutter/painting.dart' as libColor;
 
 class ProductDetailsPage extends StatefulWidget {
   ProductDetailsPage({
     super.key,
     required this.product,
   });
-  Product product;
+  Datum product;
   @override
   State<StatefulWidget> createState() => _ProductDetailsPage();
 }
 
 class _ProductDetailsPage extends State<ProductDetailsPage> {
-  
   @override
   Widget build(BuildContext context) {
-    Product product = widget.product;
+    Datum product = widget.product;
     return LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
@@ -29,7 +31,7 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
             color: Colors.black,
             onPressed: () => GoRouter.of(context).go('/'),
           ),
-          backgroundColor: const Color(0xF1F4F8),
+          backgroundColor: libColor.Color(0xF1F4F8),
           title: Image.asset(
             'images/stylish_logo02.png',
             height: 24,
@@ -45,19 +47,23 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Image(
-                      image: AssetImage(product.imageSrc),
+                    child: Image.network(
+                      '${product.mainImage}',
                       fit: BoxFit.fill,
                       height: 500,
                       width: 360,
                     ),
                   ),
-                  ProductVariantsWidget(product: product,),
+                  ProductVariantsWidget2(
+                    product: product,
+                  ),
                 ],
               ),
               Column(
                 children: [
-                  ProductDetailImagesWidget(),
+                  ProductDetailImagesWidget(
+                    product: product,
+                  ),
                 ],
               ),
             ],
@@ -80,17 +86,21 @@ class _ProductDetailsPage extends State<ProductDetailsPage> {
           children: [
             Padding(
               padding: EdgeInsets.all(8.0),
-              child: Image(
-                image: AssetImage(product.imageSrc),
+              child: Image.network(
+                '${product.mainImage}',
                 fit: BoxFit.fill,
                 height: 500,
                 width: 360,
               ),
             ),
-            ProductVariantsWidget(product: product,),
+            ProductVariantsWidget2(
+              product: product,
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ProductDetailImagesWidget(),
+              child: ProductDetailImagesWidget(
+                product: product,
+              ),
             ),
           ],
         )),

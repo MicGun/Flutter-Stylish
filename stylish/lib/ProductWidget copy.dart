@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
 
 class ProductWidget extends StatelessWidget {
   ProductWidget({
-    super.key, 
+    super.key,
     required this.product,
     required this.onProductTap,
-    });
+  });
 
-  Product product;
+  Datum product;
   ValueSetter<Product> onProductTap;
 
   @override
@@ -21,7 +22,7 @@ class ProductWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: InkWell(
-        onTap:() => GoRouter.of(context).go('/productDetails', extra: product),
+        onTap: () => GoRouter.of(context).go('/productDetails', extra: product),
         child: Row(
           children: [
             ClipRRect(
@@ -29,12 +30,19 @@ class ProductWidget extends StatelessWidget {
                 topLeft: Radius.circular(8.0),
                 bottomLeft: Radius.circular(8.0),
               ),
-              child: Image(
-                image: AssetImage(product.imageSrc),
-                fit: BoxFit.fill,
+              child: Image.network(
+                '${product.mainImage}',
                 height: 100,
                 width: 80,
+                fit: BoxFit.cover,
               ),
+
+              // Image(
+              //   image: AssetImage(product.imageSrc),
+              //   fit: BoxFit.fill,
+              //   height: 100,
+              //   width: 80,
+              // ),
             ),
             const SizedBox(
               width: 8,
@@ -44,10 +52,11 @@ class ProductWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  product.productName,
+                  product.title!,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                Text('${product.currency} ${product.price}'),
+                // Text('${product.currency} ${product.price}'),
+                Text('NT ${product.price}'),
               ],
             ),
           ],
