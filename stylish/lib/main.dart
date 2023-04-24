@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stylish/CartProduct.dart';
@@ -127,83 +128,94 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPage extends State<ProductsPage> {
   FakeRepo repo = FakeRepo();
   late ProcuctCubit procuctCubit;
+  static const platform = MethodChannel('samples.flutter.dev/battery');
 
   @override
   void initState() {
     // procuctCubit = ProcuctCubit();
     // procuctCubit.getAllProducts(0);
+    context.read<ProcuctCubit>().getBatteryLevel();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProcuctCubit>().getAllProducts(0);
-    return LayoutBuilder(builder: (context, constraints) {
-      var webLayout = Scaffold(
-        appBar: AppBar(
-            backgroundColor: libColor.Color(0xF1F4F8),
-            title: Image.asset(
-              'images/stylish_logo02.png',
-              height: 24,
-              fit: BoxFit.fitHeight,
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.add_shopping_cart,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  GoRouter.of(context).go('/shoppingCart');
-                },
-              ),
-            ]),
-        body:
-            BlocBuilder<ProcuctCubit, ProductState>(builder: (context, state) {
-          return Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 170,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    for (var i = 0; i < 5; i++) const ImageCardWeiget()
-                  ],
-                ),
-              ),
-              Expanded(child: getWebProductListWidget(state)
-                  // Row(
-                  //   children: [
-                  //     ProductListWidget(
-                  //       listTitle: '男裝',
-                  //       // products: repo.getMenProducts(),
-                  //       onProductTap: (product) {},
-                  //     ),
-                  //     ProductListWidget(
-                  //       listTitle: '女裝',
-                  //       // products: repo.getWomenProducts(),
-                  //       onProductTap: (product) {},
-                  //     ),
-                  //     ProductListWidget(
-                  //       listTitle: '配件',
-                  //       // products: repo.getAccessoryProducts(),
-                  //       onProductTap: (product) {},
-                  //     ),
-                  //   ],
-                  // ),
-                  ),
-            ],
-          ));
-        }),
-      );
-      var mobileLayout = MobileCatalogScreen(
-        repo: repo,
-        onProductTap: (value) {},
-      );
-      return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
-    });
+    // context.read<ProcuctCubit>().getAllProducts(0);
+    var level = context.watch<ProcuctCubit>().batteryLevel;
+    return 
+    BlocBuilder<ProcuctCubit, ProductState>(
+      builder: (context, state) {
+        return Center(
+          child: Text(level),
+        );
+      },
+    );
+    // LayoutBuilder(builder: (context, constraints) {
+    //   var webLayout = Scaffold(
+    //     appBar: AppBar(
+    //         backgroundColor: libColor.Color(0xF1F4F8),
+    //         title: Image.asset(
+    //           'images/stylish_logo02.png',
+    //           height: 24,
+    //           fit: BoxFit.fitHeight,
+    //         ),
+    //         actions: <Widget>[
+    //           IconButton(
+    //             icon: Icon(
+    //               Icons.add_shopping_cart,
+    //               color: Colors.white,
+    //             ),
+    //             onPressed: () {
+    //               GoRouter.of(context).go('/shoppingCart');
+    //             },
+    //           ),
+    //         ]),
+    //     body:
+    //         BlocBuilder<ProcuctCubit, ProductState>(builder: (context, state) {
+    //       return Center(
+    //           child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: [
+    //           SizedBox(
+    //             height: 170,
+    //             child: ListView(
+    //               scrollDirection: Axis.horizontal,
+    //               children: [
+    //                 for (var i = 0; i < 5; i++) const ImageCardWeiget()
+    //               ],
+    //             ),
+    //           ),
+    //           Expanded(child: getWebProductListWidget(state)
+    //               // Row(
+    //               //   children: [
+    //               //     ProductListWidget(
+    //               //       listTitle: '男裝',
+    //               //       // products: repo.getMenProducts(),
+    //               //       onProductTap: (product) {},
+    //               //     ),
+    //               //     ProductListWidget(
+    //               //       listTitle: '女裝',
+    //               //       // products: repo.getWomenProducts(),
+    //               //       onProductTap: (product) {},
+    //               //     ),
+    //               //     ProductListWidget(
+    //               //       listTitle: '配件',
+    //               //       // products: repo.getAccessoryProducts(),
+    //               //       onProductTap: (product) {},
+    //               //     ),
+    //               //   ],
+    //               // ),
+    //               ),
+    //         ],
+    //       ));
+    //     }),
+    //   );
+    //   var mobileLayout = MobileCatalogScreen(
+    //     repo: repo,
+    //     onProductTap: (value) {},
+    //   );
+    //   return (constraints.maxWidth > 700) ? webLayout : mobileLayout;
+    // });
   }
 }
 
