@@ -15,6 +15,7 @@ class ProcuctCubit extends Cubit<ProductState> {
   Products menProducts = Products();
   Products accessoriesProducts = Products();
   String batteryLevel = 'Unknown battery level.';
+  String? tapPayPrime;
   // int nextPaging = 1;
   bool isLoading = false;
   void getAllProducts(int page) async {
@@ -74,6 +75,27 @@ class ProcuctCubit extends Cubit<ProductState> {
       batteryLevel = "Failed to get battery level: '${e.message}'.";
     }
     isLoading = false;
+    emit(GetProductsSuccessState());
+  }
+
+  void doTapPay() async {
+    isLoading = true;
+    if (isLoading) {
+      emit(ShowLoadingState());
+    }
+
+    try {
+      final String result = await platform.invokeMethod('doTapPay');
+      tapPayPrime = result;
+    } on PlatformException catch (e) {
+      tapPayPrime = '';
+    }
+    isLoading = false;
+    emit(GetProductsSuccessState());
+  }
+
+  void setTapPayPrimeValue(String prime) {
+    tapPayPrime = prime;
     emit(GetProductsSuccessState());
   }
 }

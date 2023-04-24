@@ -15,4 +15,14 @@
     <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+
+    <style name="MessageDialog">
+        <item name="android:windowBackground">@color/translucent_80</item>
+    </style>
+
+    <style name="PaymentColorTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/gray_cccccc</item>
+        <item name="colorControlActivated">@color/black_3f3a3a</item>
+        <item name="android:colorControlHighlight">@color/black_3f3a3a</item>
+    </style>
 </resources>
