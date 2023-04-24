@@ -66,6 +66,16 @@ flutter {
     source '../..'
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(name: 'tpdirect', ext: 'aar')
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.google.android.gms:play-services-wallet:19.1.0'
 }

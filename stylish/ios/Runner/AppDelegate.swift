@@ -14,12 +14,13 @@ import Flutter
           batteryChannel.setMethodCallHandler({
               [weak self] (call: FlutterMethodCall, result: FlutterResult) -> Void in
                 // This method is invoked on the UI thread.
-                guard call.method == "getBatteryLevel" else {
+              if call.method == "getBatteryLevel"{
+                  result(Int(0.25 * 100))
+              } else {
                   result(FlutterMethodNotImplemented)
                   return
                 }
                 // self?.receiveBatteryLevel(result: result)
-                result(Int(0.33 * 100))
           })
       
       GeneratedPluginRegistrant.register(with: self)

@@ -35,7 +35,6 @@ class MainActivity: FlutterActivity() {
                 result.notImplemented()
             }
         }
-
     }
 
     private fun getBatteryLevel(): Int {
