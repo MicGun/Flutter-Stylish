@@ -425,13 +425,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _buildAndroidView(),
-              Expanded(child: Center(child: Padding(
-                padding: EdgeInsets.all(24),
-                child: Text('Prime Value: $value')))),
+              Expanded(
+                  child: Center(
+                      child: Padding(
+                          padding: EdgeInsets.all(24),
+                          child: Text('Prime Value: $value')))),
             ],
-            mainAxisAlignment: MainAxisAlignment.start,
           ),
         ),
       );
@@ -486,7 +488,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return Expanded(
         child: Container(
             color: Colors.white,
-            child: CustomAndroidView(_onCustomAndroidViewCreated)));
+            child: Card(
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.only(top: 36),
+                  child: CustomAndroidView(_onCustomAndroidViewCreated)))));
   }
 
   void _onCustomAndroidViewCreated(CustomViewController controller) {

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 typedef OnViewCreated = Function(CustomViewController);
 
-///自定义AndroidView
+///Custome AndroidView
 class CustomAndroidView extends StatefulWidget {
   final OnViewCreated onViewCreated;
 
@@ -52,7 +52,7 @@ class CustomViewController {
       (call) async {
         switch (call.method) {
           case 'getPrimeSuccessful':
-            // 从native端获取数据
+          //get data from native side
             final result = call.arguments as String;
             _controller.sink.add(result);
             break;
@@ -63,10 +63,10 @@ class CustomViewController {
 
   Stream<String> get customDataStream => _controller.stream;
 
-  // 发送数据给native
+  // send data to native side
   Future<void> sendMessageToAndroidView(String message) async {
     await _channel.invokeMethod(
-      'getMessageFromFlutterView',
+      'methodNameHere',
       message,
     );
   }

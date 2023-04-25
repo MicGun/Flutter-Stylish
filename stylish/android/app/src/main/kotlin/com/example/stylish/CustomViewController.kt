@@ -23,12 +23,13 @@ class CustomViewController(
     )
 
     init {
-        // 如果需要在自定义view交互中申请监听权限可以加上下面这句话
-        // CustomShared.binding?.addRequestPermissionsResultListener(this)
+        // 如果需要在自定義 view 交互中申請監聽權限可以加上下面
+//         CustomShared.binding?.addRequestPermissionsResultListener(this)
 
         channel.setMethodCallHandler(this)
         params.entries.forEach {
-//            Log.i("rex", "CustomView初始化接收入参：${it.key} - ${it.value}")
+
+            //init params here
         }
     }
     
@@ -53,10 +54,11 @@ class CustomViewController(
     }
 
     override fun dispose() {
-        Log.i("rex", "flutterView on Dispose")
+
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        //在這邊 Handle 來自 Flutter 的請求
 //        when (call.method) {
 //            "getMessageFromFlutterView" -> {
 //                customView?.getMessageFromFlutter(call.arguments.toString())
