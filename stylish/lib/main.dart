@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stylish/CartProduct.dart';
@@ -17,6 +18,8 @@ import 'ProductDetailsPage copy.dart';
 import 'ProductListWeiget.dart';
 import 'cubit/product_cubit/product_cubit.dart';
 import 'package:flutter/painting.dart' as libColor;
+
+import 'custom_android_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,7 +48,8 @@ class MyApp extends StatelessWidget {
     ),
     GoRoute(
       path: "/shoppingCart",
-      builder: (context, state) => ShoppingCartPage(),
+      // builder: (context, state) => ShoppingCartPage(),
+      builder: (context, state) => MyHomePage(),
     ),
   ]);
 
@@ -127,18 +131,31 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPage extends State<ProductsPage> {
   FakeRepo repo = FakeRepo();
   late ProcuctCubit procuctCubit;
+  static const platform = MethodChannel('samples.flutter.dev/battery');
 
   @override
   void initState() {
     // procuctCubit = ProcuctCubit();
     // procuctCubit.getAllProducts(0);
+    context.read<ProcuctCubit>().getAllProducts(0);
+    // context.read<ProcuctCubit>().getBatteryLevel();
+    // context.read<ProcuctCubit>().doTapPay();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProcuctCubit>().getAllProducts(0);
-    return LayoutBuilder(builder: (context, constraints) {
+    // context.read<ProcuctCubit>().getAllProducts(0);
+    // var level = context.watch<ProcuctCubit>().batteryLevel;
+    return
+        // BlocBuilder<ProcuctCubit, ProductState>(
+        //   builder: (context, state) {
+        //     return Center(
+        //       child: Text(level),
+        //     );
+        //   },
+        // );
+        LayoutBuilder(builder: (context, constraints) {
       var webLayout = Scaffold(
         appBar: AppBar(
             backgroundColor: libColor.Color(0xF1F4F8),
@@ -345,7 +362,7 @@ class _MobileCatalogScreenState extends State<MobileCatalogScreen> {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -356,7 +373,7 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  // final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -364,6 +381,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String prime = '';
+  ProcuctCubit? model;
+
+  @override
+  void initState() {
+    model = context.read<ProcuctCubit>();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -378,53 +402,105 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var value = context.watch<ProcuctCubit>().tapPayPrime;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return BlocBuilder<ProcuctCubit, ProductState>(builder: (context, state) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: BackButton(
+            color: Colors.black,
+            onPressed: () => GoRouter.of(context).go('/'),
+          ),
+          backgroundColor: const libColor.Color(0xF1F4F8),
+          title: Image.asset(
+            'images/stylish_logo02.png',
+            height: 24,
+            fit: BoxFit.fitHeight,
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _buildAndroidView(),
+              Expanded(
+                  child: Center(
+                      child: Padding(
+                          padding: EdgeInsets.all(24),
+                          child: Text('Prime Value: $value')))),
+            ],
+          ),
+        ),
+      );
+    });
+    // BlocBuilder<ProcuctCubit, ProductState>(builder: (context, state) {
+    //   return Scaffold(
+    //     appBar: AppBar(
+    //       // Here we take the value from the MyHomePage object that was created by
+    //       // the App.build method, and use it to set our appbar title.
+    //       title: const Text('Payment'),
+    //     ),
+    //     body: Center(
+    //       // Center is a layout widget. It takes a single child and positions it
+    //       // in the middle of the parent.
+    //       child: Column(
+    //         // Column is also a layout widget. It takes a list of children and
+    //         // arranges them vertically. By default, it sizes itself to fit its
+    //         // children horizontally, and tries to be as tall as its parent.
+    //         //
+    //         // Invoke "debug painting" (press "p" in the console, choose the
+    //         // "Toggle Debug Paint" action from the Flutter Inspector in Android
+    //         // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+    //         // to see the wireframe for each widget.
+    //         //
+    //         // Column has various properties to control how it sizes itself and
+    //         // how it positions its children. Here we use mainAxisAlignment to
+    //         // center the children vertically; the main axis here is the vertical
+    //         // axis because Columns are vertical (the cross axis would be
+    //         // horizontal).
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: <Widget>[
+    //           Text(
+    //             value ?? '',
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //     floatingActionButton: FloatingActionButton(
+    //       onPressed: doTapPay,
+    //       tooltip: 'Increment',
+    //       child: const Icon(Icons.add),
+    //     ), // This trailing comma makes auto-formatting nicer for build methods.
+    //   );
+    // });
+  }
+
+  void doTapPay() {
+    model?.doTapPay();
+  }
+
+  Widget _buildAndroidView() {
+    return Expanded(
+        child: Container(
+            color: Colors.white,
+            child: Card(
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.only(top: 36),
+                  child: CustomAndroidView(_onCustomAndroidViewCreated)))));
+  }
+
+  void _onCustomAndroidViewCreated(CustomViewController controller) {
+    controller.customDataStream.listen((event) {
+      model?.setTapPayPrimeValue(event);
+    });
   }
 }
