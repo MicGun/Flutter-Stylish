@@ -9,6 +9,7 @@ import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/ShoppingCartPage.dart';
 import 'package:stylish/cubit/product_cubit/product_state.dart';
 import 'package:stylish/domain/category_domain.dart';
+import 'package:stylish/google_maps_screen.dart';
 import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
 import 'package:stylish/widgets/default_loading_indicator.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
   final GoRouter _goRouter = GoRouter(routes: [
     GoRoute(
       path: "/",
-      builder: (context, state) => const ProductsPage(),
+      // builder: (context, state) => const ProductsPage(),
+      builder: (context, state) => const GoogleMapsScreen(),
     ),
     GoRoute(
       path: "/productDetails",
@@ -49,7 +51,8 @@ class MyApp extends StatelessWidget {
     GoRoute(
       path: "/shoppingCart",
       // builder: (context, state) => ShoppingCartPage(),
-      builder: (context, state) => MyHomePage(),
+      // builder: (context, state) => MyHomePage(),
+      builder: (context, state) => GoogleMapsScreen(),
     ),
   ]);
 
