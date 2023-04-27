@@ -40,7 +40,13 @@ class MainActivity: FlutterActivity() {
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+
         flutterEngine.plugins.add(CustomAndroidViewPlugin())
+
+
+
+
+
 //        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
 //            // This method is invoked on the main thread.
 //                call, result ->
