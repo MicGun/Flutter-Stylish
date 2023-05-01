@@ -51,8 +51,8 @@ class MyApp extends StatelessWidget {
     GoRoute(
       path: "/shoppingCart",
       // builder: (context, state) => ShoppingCartPage(),
-      // builder: (context, state) => MyHomePage(),
-      builder: (context, state) => GoogleMapsScreen(),
+      builder: (context, state) => MyHomePage(),
+      // builder: (context, state) => GoogleMapsScreen(),
     ),
   ]);
 
