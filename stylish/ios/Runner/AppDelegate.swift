@@ -22,7 +22,7 @@ import Flutter
                 }
                 // self?.receiveBatteryLevel(result: result)
           })
-      
+//      GMSServices.provideAPIKey("AIzaSyCJhOvBeDNHBF-difvnwPplYEpwgAcaxmA")
       GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

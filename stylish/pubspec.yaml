@@ -39,6 +39,9 @@ dependencies:
   dio: ^5.1.1
   cubit: ^0.1.2
   flutter_bloc: ^8.1.2
+  google_maps_flutter: ^2.2.5
+  location: ^4.2.0
+  geocoding: ^2.1.0
 
 dev_dependencies:
   flutter_test:
