@@ -114,6 +114,12 @@ class _GoogleMapsScreenState extends State<GoogleMapsScreen> {
           ? const Text('Loading...')
           : Stack(children: [
               GoogleMap(
+                onLongPress: (argument) {
+                  // do show marker here
+                },
+                onTap: (argument) {
+                  // do clear markers here
+                },
                 scrollGesturesEnabled: true,
                 rotateGesturesEnabled: true,
                 myLocationButtonEnabled: true,

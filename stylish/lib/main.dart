@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
   final GoRouter _goRouter = GoRouter(routes: [
     GoRoute(
       path: "/",
-      // builder: (context, state) => const ProductsPage(),
-      builder: (context, state) => const GoogleMapsScreen(),
+      builder: (context, state) => const ProductsPage(),
+      // builder: (context, state) => const GoogleMapsScreen(),
     ),
     GoRoute(
       path: "/productDetails",
