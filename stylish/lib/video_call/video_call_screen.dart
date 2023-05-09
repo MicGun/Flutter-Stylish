@@ -238,13 +238,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Video Call'),
+        title: const Text('Video Call', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.black87,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: _inCalling
-          ? Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
+          ? Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               FloatingActionButton(
                 child: const Icon(
                   Icons.call_end,
@@ -262,155 +261,194 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 onPressed: () {
                   _muteMic();
                 },
-              ),]
-          )
+              ),
+            ])
           : null,
-      body: _inCalling
-          ? OrientationBuilder(builder: (context, orientation) {
-              return Stack(children: <Widget>[
-                Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    top: 0.0,
-                    bottom: 0.0,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: RTCVideoView(_remoteRenderer),
-                      decoration: BoxDecoration(color: Colors.black54),
-                    )),
-                Positioned(
-                  left: 20.0,
-                  top: 20.0,
-                  child: Container(
-                    width: orientation == Orientation.portrait ? 90.0 : 120.0,
-                    height: orientation == Orientation.portrait ? 120.0 : 90.0,
-                    child: RTCVideoView(_localRenderer, mirror: true),
-                    decoration: BoxDecoration(color: Colors.black54),
-                  ),
-                ),
-              ]);
-            })
-          : IntrinsicWidth(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 16, left: 16, right: 16),
-                        child: Text(
-                          'Your Id : $_selfId',
-                          style: const TextStyle(
-                            fontSize: 24,
-                          ),
-                        ),
+      body: _waitAccept
+          ? OrientationBuilder(
+              builder: (context, orientation) {
+                return Stack(children: <Widget>[
+                  Positioned(
+                      left: 0.0,
+                      right: 0.0,
+                      top: 0.0,
+                      bottom: 0.0,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: RTCVideoView(_localRenderer),
+                        decoration: BoxDecoration(color: Colors.black54),
+                      )),
+                ]);
+              },
+            )
+          : _inCalling
+              ? OrientationBuilder(builder: (context, orientation) {
+                  return Stack(children: <Widget>[
+                    Positioned(
+                        left: 0.0,
+                        right: 0.0,
+                        top: 0.0,
+                        bottom: 0.0,
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: RTCVideoView(_remoteRenderer),
+                          decoration: BoxDecoration(color: Colors.black54),
+                        )),
+                    Positioned(
+                      left: 20.0,
+                      top: 20.0,
+                      child: Container(
+                        width:
+                            orientation == Orientation.portrait ? 90.0 : 120.0,
+                        height:
+                            orientation == Orientation.portrait ? 120.0 : 90.0,
+                        child: RTCVideoView(_localRenderer, mirror: true),
+                        decoration: BoxDecoration(color: Colors.black54),
                       ),
-                    ],
-                  ),
-                  Row(
+                    ),
+                  ]);
+                })
+              : IntrinsicWidth(
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 16, left: 16, right: 16),
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              // textInputAction: TextInputAction.search,
-                              // onSubmitted: (value) {
-                              //   getSearchLocation(value);
-                              // },
-                              controller: _peerIdController,
-                              onChanged: (text) {
-                                setState(() {
-                                  _peerId = text;
-                                });
-                              },
-                              decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                prefixIcon: Icon(Icons.supervised_user_circle),
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0))),
-                                hintText: 'Input Peer Id here',
+                      Row(
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 16, left: 16, right: 16),
+                            child: Text(
+                              '你的 ID : $_selfId',
+                              style: const TextStyle(
+                                fontSize: 24,
                               ),
-                            )),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16, left: 16, right: 16),
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  // textInputAction: TextInputAction.search,
+                                  // onSubmitted: (value) {
+                                  //   getSearchLocation(value);
+                                  // },
+                                  controller: _peerIdController,
+                                  onChanged: (text) {
+                                    setState(() {
+                                      _peerId = text;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    prefixIcon: const Icon(
+                                        Icons.supervised_user_circle),
+                                    suffixIcon:
+                                        (_peerId == null || _peerId!.isEmpty)
+                                            ? null
+                                            : InkWell(
+                                                onTap: () {
+                                                  _peerIdController.clear();
+                                                  setState(() {
+                                                    _peerId = '';
+                                                  });
+                                                  // clearSearchData();
+                                                },
+                                                child: const Icon(Icons.clear),
+                                              ),
+                                    border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8.0))),
+                                    hintText: '請輸入聯絡人 ID',
+                                  ),
+                                )),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      (_peerId == null || _peerId!.isEmpty)
+                                          ? Colors.black12
+                                          : Colors.black87,
+                                  minimumSize: const Size(300, 60),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  //to call peer
+                                  if (_peerId != null && _peerId!.isNotEmpty) {
+                                    _invitePeer(context, _peerId!, false);
+                                  }
+                                  // _createVideoCall();
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '打給他',
+                                    style: TextStyle(
+                                      color: Color(0xffffffff),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Expanded(
+                          //   child: Padding(
+                          //     padding: EdgeInsets.all(16),
+                          //     child: ElevatedButton(
+                          //       style: ElevatedButton.styleFrom(
+                          //         backgroundColor: Colors.purpleAccent,
+                          //         minimumSize: const Size(300, 60),
+                          //         shape: const RoundedRectangleBorder(
+                          //           borderRadius: BorderRadius.all(
+                          //             Radius.circular(5),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       onPressed: () {
+                          //         //to call peer
+                          //         _JoinVideoCall();
+                          //       },
+                          //       child: const Padding(
+                          //         padding: EdgeInsets.all(8.0),
+                          //         child: Text(
+                          //           '加入他',
+                          //           style: TextStyle(
+                          //             color: Color(0xffffffff),
+                          //             fontSize: 18,
+                          //             fontWeight: FontWeight.bold,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
                       )
                     ],
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.pinkAccent,
-                              minimumSize: const Size(300, 60),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              //to call peer
-                              if (_peerId != null && _peerId!.isNotEmpty) {
-                                _invitePeer(context, _peerId!, false);
-                              }
-                              // _createVideoCall();
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                '打給他',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Expanded(
-                      //   child: Padding(
-                      //     padding: EdgeInsets.all(16),
-                      //     child: ElevatedButton(
-                      //       style: ElevatedButton.styleFrom(
-                      //         backgroundColor: Colors.purpleAccent,
-                      //         minimumSize: const Size(300, 60),
-                      //         shape: const RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.all(
-                      //             Radius.circular(5),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       onPressed: () {
-                      //         //to call peer
-                      //         _JoinVideoCall();
-                      //       },
-                      //       child: const Padding(
-                      //         padding: EdgeInsets.all(8.0),
-                      //         child: Text(
-                      //           '加入他',
-                      //           style: TextStyle(
-                      //             color: Color(0xffffffff),
-                      //             fontSize: 18,
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  )
-                ],
-              ),
-            ),
+                ),
     );
   }
 
