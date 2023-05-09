@@ -39,7 +39,7 @@ class VideoCallingServer {
 
   JsonEncoder _encoder = JsonEncoder();
   JsonDecoder _decoder = JsonDecoder();
-  
+
   final String _host = 'demo.cloudwebrtc.com';
   var _port = 8086;
   var _turnCredential;
@@ -383,8 +383,7 @@ class VideoCallingServer {
 
   Future<void> _createOffer(Session session, String media) async {
     try {
-      RTCSessionDescription s =
-          await session.pc!.createOffer({});
+      RTCSessionDescription s = await session.pc!.createOffer({});
       await session.pc!.setLocalDescription(_fixSdp(s));
       _send('offer', {
         'to': session.pid,
@@ -408,8 +407,7 @@ class VideoCallingServer {
 
   Future<void> _createAnswer(Session session, String media) async {
     try {
-      RTCSessionDescription s =
-          await session.pc!.createAnswer({});
+      RTCSessionDescription s = await session.pc!.createAnswer({});
       await session.pc!.setLocalDescription(_fixSdp(s));
       _send('answer', {
         'to': session.pid,
@@ -441,11 +439,13 @@ class VideoCallingServer {
     }
   }
 
-  void muteMic() {
+  bool muteMic() {
     if (_localStream != null) {
       bool enabled = _localStream!.getAudioTracks()[0].enabled;
       _localStream!.getAudioTracks()[0].enabled = !enabled;
+      return _localStream!.getAudioTracks()[0].enabled;
     }
+    return false;
   }
 
   // Future<Session> joinCall(String peerId) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stylish/video_call/video_call_server.dart';
 
 class VideoCallScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   Session? _session;
   bool _inCalling = false;
   bool _waitAccept = false;
+  bool _micEnable = true;
 
   TextEditingController _peerIdController = TextEditingController();
   String? _peerId;
@@ -154,7 +156,20 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 
   _muteMic() {
-    _callingServer?.muteMic();
+    var micEnable = _callingServer?.muteMic();
+    if (micEnable != null) {
+      setState(() {
+        _micEnable = micEnable;
+      });
+
+      Fluttertoast.showToast(
+        msg: micEnable ? 'Microphone On' : 'Microphone Off',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white,
+      );
+    }
   }
 
   // void _createVideoCall() async {
@@ -238,7 +253,10 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Video Call', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'Video Call',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.black87,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -254,10 +272,15 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 },
               ),
               FloatingActionButton(
-                child: const Icon(
-                  Icons.mic_off_rounded,
-                  color: Colors.blueAccent,
-                ),
+                child: (_micEnable)
+                    ? const Icon(
+                        Icons.mic_none,
+                        color: Colors.blueAccent,
+                      )
+                    : const Icon(
+                        Icons.mic_off_rounded,
+                        color: Colors.pinkAccent,
+                      ),
                 onPressed: () {
                   _muteMic();
                 },
