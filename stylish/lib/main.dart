@@ -12,6 +12,7 @@ import 'package:stylish/domain/category_domain.dart';
 import 'package:stylish/google_maps_screen.dart';
 import 'package:stylish/models/products_model.dart';
 import 'package:stylish/product.dart';
+import 'package:stylish/video_call/video_call_screen.dart';
 import 'package:stylish/widgets/default_loading_indicator.dart';
 
 import 'ImageCardWeiget.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
   final GoRouter _goRouter = GoRouter(routes: [
     GoRoute(
       path: "/",
-      builder: (context, state) => const ProductsPage(),
+      // builder: (context, state) => const ProductsPage(),
+      builder: (context, state) => const VideoCallScreen(),
       // builder: (context, state) => const GoogleMapsScreen(),
     ),
     GoRoute(
