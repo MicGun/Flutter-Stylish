@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
+import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 class ArKitScreen extends StatefulWidget {
@@ -82,7 +85,9 @@ class _ArKitScreenState extends State<ArKitScreen> {
 
   _addSphereByClickPlane(
       ArCoreHitTestResult hit, ArCoreController _arCoreController) async {
-    final moonMaterial = ArCoreMaterial(color: Colors.grey);
+
+    ByteData moonTextureBytes = await rootBundle.load('images/moon.jpeg');    
+    final moonMaterial = ArCoreMaterial(color: Colors.grey, textureBytes: moonTextureBytes.buffer.asUint8List());
 
     final moonShape = ArCoreSphere(
       materials: [moonMaterial],
@@ -95,8 +100,11 @@ class _ArKitScreenState extends State<ArKitScreen> {
       rotation: vector.Vector4(0, 0, 0, 0),
     );
 
+    ByteData textureBytes = await rootBundle.load('images/earth.jpg');
+
     final earthMaterial = ArCoreMaterial(
       color: Color.fromARGB(184, 66, 134, 244),
+      textureBytes: textureBytes.buffer.asUint8List()
     );
 
     final earthShape = ArCoreSphere(
@@ -157,6 +165,7 @@ class _ArKitScreenState extends State<ArKitScreen> {
     var plane = hits.first;
     final toucanNode = ArCoreReferenceNode(
         name: "可愛鴨鴨",
+        object3DFileName: '',
         objectUrl:
             "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf",
         position: plane.pose.translation,
