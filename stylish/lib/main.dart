@@ -7,6 +7,7 @@ import 'package:stylish/CartProduct.dart';
 import 'package:stylish/FakeRepo.dart';
 import 'package:stylish/ProductListExpansionWeiget.dart';
 import 'package:stylish/ShoppingCartPage.dart';
+import 'package:stylish/ar_kit/ar_kit_screen.dart';
 import 'package:stylish/cubit/product_cubit/product_state.dart';
 import 'package:stylish/domain/category_domain.dart';
 import 'package:stylish/google_maps_screen.dart';
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
     GoRoute(
       path: "/",
       // builder: (context, state) => const ProductsPage(),
-      builder: (context, state) => const VideoCallScreen(),
+      builder: (context, state) => const ArKitScreen(),
+      // builder: (context, state) => const VideoCallScreen(),
       // builder: (context, state) => const GoogleMapsScreen(),
     ),
     GoRoute(
