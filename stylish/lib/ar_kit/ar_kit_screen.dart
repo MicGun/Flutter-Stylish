@@ -12,14 +12,64 @@ class ArKitScreen extends StatefulWidget {
 class _ArKitScreenState extends State<ArKitScreen> {
   late ArCoreController arCoreController;
 
+  bool isEarth = false;
+
   _onArCoreViewCreated(ArCoreController _arCoreController) {
     arCoreController = _arCoreController;
+    arCoreController.onNodeTap = (name) => _onTapHandler(name);
     arCoreController.onPlaneTap = (hits) {
-      _handlePlaneTap(hits, arCoreController);
+      if (isEarth) {
+        _handlePlaneTap(hits, _arCoreController);
+      } else {
+        _addToucano(hits, arCoreController);
+      }
     };
     // _addSphere(arCoreController);
     // _addCylinder(_arCoreController);
     // _addCube(_arCoreController);
+  }
+
+  _onTapHandler(String name) {
+    print("Flutter: onNodeTap");
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('移除$name'),
+        content: Text('你真的捨得移除$name嗎？'),
+        actions: <Widget>[
+          MaterialButton(
+            child: const Text(
+              '取消',
+              style: TextStyle(color: Color(0xff575a69)),
+            ),
+            onPressed: () {},
+          ),
+          MaterialButton(
+            child: const Text(
+              '移除',
+              style: TextStyle(color: Colors.redAccent),
+            ),
+            onPressed: () {
+              arCoreController.removeNode(nodeName: name);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+        // Row(
+        //   children: <Widget>[
+        //     Text('Remove $name?'),
+        //     IconButton(
+        //         icon: Icon(
+        //           Icons.delete,
+        //         ),
+        //         onPressed: () {
+        //           arCoreController.removeNode(nodeName: name);
+        //           Navigator.pop(context);
+        //         })
+        //   ],
+        // ),
+      ),
+    );
   }
 
   _handlePlaneTap(
@@ -32,7 +82,6 @@ class _ArKitScreenState extends State<ArKitScreen> {
 
   _addSphereByClickPlane(
       ArCoreHitTestResult hit, ArCoreController _arCoreController) async {
-
     final moonMaterial = ArCoreMaterial(color: Colors.grey);
 
     final moonShape = ArCoreSphere(
@@ -47,7 +96,8 @@ class _ArKitScreenState extends State<ArKitScreen> {
     );
 
     final earthMaterial = ArCoreMaterial(
-        color: Color.fromARGB(184, 66, 134, 244),);
+      color: Color.fromARGB(184, 66, 134, 244),
+    );
 
     final earthShape = ArCoreSphere(
       materials: [earthMaterial],
@@ -55,6 +105,7 @@ class _ArKitScreenState extends State<ArKitScreen> {
     );
 
     final earth = ArCoreNode(
+      name: '地球月亮',
         shape: earthShape,
         children: [moon],
         position: hit.pose.translation + vector.Vector3(0.0, 0.5, 0.0),
@@ -101,19 +152,118 @@ class _ArKitScreenState extends State<ArKitScreen> {
     _arCoreController.addArCoreNode(node);
   }
 
+  _addToucano(
+      List<ArCoreHitTestResult> hits, ArCoreController _arCoreController) {
+    var plane = hits.first;
+    final toucanNode = ArCoreReferenceNode(
+        name: "可愛鴨鴨",
+        objectUrl:
+            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF/Duck.gltf",
+        position: plane.pose.translation,
+        rotation: plane.pose.rotation);
+
+    _arCoreController.addArCoreNodeWithAnchor(toucanNode);
+  }
+
   @override
   void dispose() {
     arCoreController.dispose();
     super.dispose();
   }
 
+  _swich2Balls() {
+    setState(() {
+      isEarth = true;
+    });
+  }
+
+  _swich2Duck() {
+    setState(() {
+      isEarth = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ArCoreView(
-        onArCoreViewCreated: _onArCoreViewCreated,
-        enableTapRecognizer: true,
-      ),
+      body: Stack(children: [
+        ArCoreView(
+          onArCoreViewCreated: _onArCoreViewCreated,
+          enableTapRecognizer: true,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            isEarth ? Colors.black87 : Colors.black12,
+                        minimumSize: const Size(300, 60),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                      ),
+                      onPressed: _swich2Balls,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          '地球月亮',
+                          style: TextStyle(
+                            color: Color(0xffffffff),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            isEarth ? Colors.black12 : Colors.black87,
+                        minimumSize: const Size(300, 60),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                      ),
+                      onPressed: _swich2Duck,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          '黃色鴨鴨',
+                          style: TextStyle(
+                            color: Color(0xffffffff),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // MaterialButton(
+                //   child: Text('太陽系'),
+                //   onPressed: _swich2Balls,
+                // ),
+                // MaterialButton(child: Text('黃色鴨鴨'), onPressed: _swich2Duck)
+              ],
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }
