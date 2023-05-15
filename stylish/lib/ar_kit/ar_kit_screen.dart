@@ -14,9 +14,60 @@ class _ArKitScreenState extends State<ArKitScreen> {
 
   _onArCoreViewCreated(ArCoreController _arCoreController) {
     arCoreController = _arCoreController;
-    _addSphere(arCoreController);
-    _addCylinder(_arCoreController);
-    _addCube(_arCoreController);
+    arCoreController.onPlaneTap = (hits) {
+      _handlePlaneTap(hits, arCoreController);
+    };
+    // _addSphere(arCoreController);
+    // _addCylinder(_arCoreController);
+    // _addCube(_arCoreController);
+  }
+
+  _handlePlaneTap(
+      List<ArCoreHitTestResult> hits, ArCoreController _arCoreController) {
+    var hit = hits.first;
+    if (hit != null) {
+      _addSphereByClickPlane(hit, _arCoreController);
+    }
+  }
+
+  _addSphereByClickPlane(
+      ArCoreHitTestResult hit, ArCoreController _arCoreController) async {
+
+    final moonMaterial = ArCoreMaterial(color: Colors.grey);
+
+    final moonShape = ArCoreSphere(
+      materials: [moonMaterial],
+      radius: 0.03,
+    );
+
+    final moon = ArCoreNode(
+      shape: moonShape,
+      position: vector.Vector3(0.2, 0, 0),
+      rotation: vector.Vector4(0, 0, 0, 0),
+    );
+
+    final earthMaterial = ArCoreMaterial(
+        color: Color.fromARGB(184, 66, 134, 244),);
+
+    final earthShape = ArCoreSphere(
+      materials: [earthMaterial],
+      radius: 0.1,
+    );
+
+    final earth = ArCoreNode(
+        shape: earthShape,
+        children: [moon],
+        position: hit.pose.translation + vector.Vector3(0.0, 0.5, 0.0),
+        rotation: hit.pose.rotation);
+
+    // var material = ArCoreMaterial(color: Colors.deepOrange);
+    // var sphere = ArCoreSphere(materials: [material], radius: 0.2);
+    // var node = ArCoreNode(
+    //   shape: sphere,
+    //   position: hit.pose.translation + vector.Vector3(0.0, 1.0, 0.0),
+    //   rotation: hit.pose.rotation
+    // );
+    _arCoreController.addArCoreNodeWithAnchor(earth);
   }
 
   _addSphere(ArCoreController _arCoreController) {
@@ -61,6 +112,7 @@ class _ArKitScreenState extends State<ArKitScreen> {
     return Scaffold(
       body: ArCoreView(
         onArCoreViewCreated: _onArCoreViewCreated,
+        enableTapRecognizer: true,
       ),
     );
   }
